@@ -1,23 +1,39 @@
 package com.miguel_lm.app_entrenamiento_nadador.modelo;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-
+@Entity(tableName = "entrenamientos")
 public class Entrenamiento {
 
+    @PrimaryKey
+    @NonNull
     private Date fecha;
+    @NonNull
     int horas;
+    @NonNull
     int minutos;
+    @NonNull
     int segundos;
+    @NonNull
     private int distanciaMts;
 
+    // Campos calculados, no se guardan en la bd
+    @Ignore
     private float tiempoEnMinutos;
+    @Ignore
     private int tiempoEnSegundos;
+    @Ignore
     private float minutosPorKm;
+    @Ignore
     private float segundosPorKm;
 
     public Entrenamiento(Date fecha, int horas, int minutos, int segundos, int distanciaMts) {  //int hora, int minutos, int segundos
