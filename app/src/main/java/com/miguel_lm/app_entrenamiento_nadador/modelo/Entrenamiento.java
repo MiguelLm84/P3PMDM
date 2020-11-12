@@ -14,7 +14,8 @@ import java.util.Locale;
 @Entity(tableName = "entrenamientos")
 public class Entrenamiento {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int key;
     @NonNull
     private Date fecha;
     @NonNull
