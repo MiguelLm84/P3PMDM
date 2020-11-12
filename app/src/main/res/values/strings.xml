@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">App_Entrenamiento_Nadador</string>
+    <string name="crearEntreno">Crear Entrenamiento</string>
+    <string name="verEstadisticas">Ver Estadísticas</string>
+    <string name="modificarEntreno">Modificar</string>
+    <string name="eliminarEntreno">Eliminar</string>
+    <string name="entreno_nuevo">Entrenamiento Nuevo</string>
+    <string name="fechaEntreno">Fecha</string>
+    <string name="fechaHint">Fecha</string>
+    <string name="tiempoEntreno">Tiempo</string>
+    <string name="horasHint">Horas</string>
+    <string name="minutosHint">Minutos</string>
+    <string name="segundosHint">Segundos</string>
+    <string name="distanciaHint">Distancia</string>
+    <string name="cancelarEntreno">Cancelar</string>
+    <string name="ingresarEntreno">Ingresar</string>
+    <string name="distancia_mts">Distancia (mts)</string>
+    <string name="distancia_mtsEntreno">Distancia (mts)</string>
+    <string name="crear_entrenoContextual">Crear Entrenamiento</string>
+    <string name="modificar_Contextual">Modificar</string>
+    <string name="eliminar_contextual">Eliminar</string>
+    <string name="crear_entreno">Crear Entrenamiento</string>
+    <string name="fecha_dialog">Fecha</string>
+    <string name="modificar_entreno">Modificar Entrenamiento</string>
+    <string name="tminutos_por_km">Minutos por Km</string>
+    <string name="titulo_estadisticas">Estadísticas</string>
+    <string name="segundos_por_km">Segundos por Km</string>
+    <string name="velocidad_media">Velocidad Media</string>
+    <string name="fecha_hint_modificar">Fecha</string>
+    <string name="info_entrenamiento">Info Entrenamiento</string>
+    <string name="fecha_titulo_info">Fecha</string>
+    <string name="fecha_info_entreno">Fecha</string>
+    <string name="tiempo_titulo">Tiempo</string>
+    <string name="distancia_titulo_info">Distancia</string>
+    <string name="nombreSheredPreferences">Nombre</string>
+    <string name="edNombreHint">Nombre</string>
+    <string name="edApellidoHint">Apellido</string>
+    <string name="edPrimer_apellidoHint">Primer Apellido</string>
+    <string name="edApellido2Hint">Apellido</string>
+    <string name="edSegundo_apellidoHint">Segundo Apellido</string>
+    <string name="tvApellido_SheredPreferences">Apellido</string>
+    <string name="tvApellido2_SheredPreferences">Apellido</string>
+
+</resources>

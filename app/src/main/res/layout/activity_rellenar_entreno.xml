@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:foregroundTint="#2196F3"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <TextView
+        android:id="@+id/titulo_estadisticas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="30dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:fontFamily="sans-serif-black"
+        android:foregroundTint="#2196F3"
+        android:inputType="none"
+        android:shadowColor="#FFFFFF"
+        android:text="@string/entreno_nuevo"
+        android:textAlignment="center"
+        android:textColor="#020202"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:ignore="TextViewEdits" />
+
+    <TextView
+        android:id="@+id/tV_FechaTrainning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:paddingTop="8dp"
+        android:text="@string/fechaEntreno"
+        android:textColor="#020202"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/tvMinPorKm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/fechaHint"
+        android:inputType="date"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="#020202"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tV_TiempoTrainning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/tiempoEntreno"
+        android:textColor="#020202"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/tv_hora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:hint="@string/horasHint"
+            android:inputType="number"
+            android:textColor="#020202"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/tv_minutos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:hint="@string/minutosHint"
+            android:inputType="number"
+            android:textColor="#020202"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/tv_segundos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:hint="@string/segundosHint"
+            android:inputType="number"
+            android:textColor="#020202"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tV_Distancia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/distancia_mtsEntreno"
+        android:textColor="#020202"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/tv_DistanciaTrainning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:autofillHints=""
+        android:hint="@string/distanciaHint"
+        android:inputType="number"
+        android:textColor="#020202"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:onClick="onClickButtonCancelar"
+            android:text="@string/cancelarEntreno"
+            android:textColor="@android:color/white" />
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btn_Ingresar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:onClick="onClickButtonAceptar"
+            android:text="@string/ingresarEntreno"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</LinearLayout>
