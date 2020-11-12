@@ -19,10 +19,20 @@ public class AdapterEntrenamientos extends RecyclerView.Adapter<ViewHolderEntren
     private Context context;
     private SeleccionarEntreno seleccionarEntrenamiento;
 
-    public AdapterEntrenamientos(List<Entrenamiento> listEntrenamientos,final Context context, SeleccionarEntreno seleccionarEntrenamient) {
-        this.listEntrenamientos = listEntrenamientos;
+    public AdapterEntrenamientos(final Context context, SeleccionarEntreno seleccionarEntrenamient) {
+        this.listEntrenamientos = RepositorioEntrenamientos.getInstance(context).obtenerEntrenamientos();
         this.context = context;
         this.seleccionarEntrenamiento = seleccionarEntrenamient;
+    }
+
+    /*public void actualizarListado(List<Entrenamiento> listEntrenamientos) {
+        this.listEntrenamientos = listEntrenamientos;
+        notifyDataSetChanged();
+    }
+    */
+    public void actualizarListado() {
+        this.listEntrenamientos = RepositorioEntrenamientos.getInstance(context).obtenerEntrenamientos();
+        notifyDataSetChanged();
     }
 
     @NonNull

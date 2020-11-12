@@ -46,8 +46,8 @@ public class RepositorioEntrenamientos {
         return daoEntrenamiento.obtenerEntrenamientos();
     }
 
-    public void eliminarEntrenamiento() {
-        daoEntrenamiento.eliminarEntrenamiento();
+    public void eliminarEntrenamiento(Entrenamiento entrenamiento) {
+        daoEntrenamiento.eliminarEntrenamiento(entrenamiento);
     }
 
     public void insertar(Entrenamiento nuevoEntrenamiento) {

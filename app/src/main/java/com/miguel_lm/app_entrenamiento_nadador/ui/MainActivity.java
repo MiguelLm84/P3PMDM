@@ -1,9 +1,5 @@
 package com.miguel_lm.app_entrenamiento_nadador.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -16,21 +12,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
+import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SeleccionarEntreno {
 
-    private List<Entrenamiento> listaEntrenamientos;
+    ////////////////////////  private List<Entrenamiento> listaEntrenamientos;
     private AdapterEntrenamientos adapterEntrenamientos;
 
     @Override
@@ -38,15 +39,11 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listaEntrenamientos = new ArrayList<>();
-
-        listaEntrenamientos.add(new Entrenamiento(new Date(), 1, 50, 20, 500));
-        listaEntrenamientos.add(new Entrenamiento(new Date(), 2, 15, 50, 250));
-        listaEntrenamientos.add(new Entrenamiento(new Date(), 2, 20, 40, 100));
+        ///////////List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         RecyclerView recyclerViewEntrenamientos = findViewById(R.id.recyclerViewEntrenamientos);
         recyclerViewEntrenamientos.setLayoutManager(new LinearLayoutManager(this));
-        adapterEntrenamientos = new AdapterEntrenamientos(listaEntrenamientos,this, this);
+        adapterEntrenamientos = new AdapterEntrenamientos(this, this);
         recyclerViewEntrenamientos.setAdapter(adapterEntrenamientos);
     }
 
@@ -176,12 +173,19 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                 if (entrenamientoAModificar == null) {
 
                     Entrenamiento nuevoEntrenamiento = new Entrenamiento(cal.getTime(), horasInt, minutosInt, segundosInt, distanciaInt);
-                    listaEntrenamientos.add(nuevoEntrenamiento);
+
+                    RepositorioEntrenamientos.getInstance(MainActivity.this).insertar(nuevoEntrenamiento);
+                    //////////////////////// listaEntrenamientos.add(nuevoEntrenamiento);
 
                 } else {
                     entrenamientoAModificar.modificar(cal.getTime(), horasInt, minutosInt, segundosInt, distanciaInt);
+
+                    RepositorioEntrenamientos.getInstance(MainActivity.this).actualizarEntrenamiento(entrenamientoAModificar);
                 }
-                adapterEntrenamientos.notifyDataSetChanged();
+
+                // Actualizar el adapter, recargará los datos desde la bd
+                adapterEntrenamientos.actualizarListado();
+
                 Toast.makeText(MainActivity.this, entrenamientoAModificar == null ? "Entrenamiento creado" : "Entrenamiento modificado", Toast.LENGTH_SHORT).show();
 
             }
@@ -193,6 +197,8 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     }
 
     private void accionVerEstadisticas() {
+
+        List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         Entrenamiento mostrarInfoEstadisticas = null;
         for (int i=0;i<listaEntrenamientos.size();i++) {
@@ -218,6 +224,8 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     }
 
     private void accionModificar() {
+
+        List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setIcon(R.drawable.ic_pencil);
@@ -262,6 +270,8 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
     private void accionEliminar() {
 
+        final List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
+
         AlertDialog.Builder builderElimina = new AlertDialog.Builder(MainActivity.this);
         builderElimina.setIcon(R.drawable.ic_remove_symbol);
         builderElimina.setTitle("Eliminar elementos");
@@ -289,12 +299,19 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
 
-                        for (int i = listaEntrenamientos.size()-1; i>=0; i--) {
+                        for (int i = 0 ; i<listaEntrenamientos.size() ; i++)
+                            if (entrenamientosSeleccionados[i])
+                                RepositorioEntrenamientos.getInstance(MainActivity.this).eliminarEntrenamiento(listaEntrenamientos.get(i));
+
+                        ////////////////////////
+                   /*     for (int i = listaEntrenamientos.size()-1; i>=0; i--) {
                             if (entrenamientosSeleccionados[i]) {
                                 listaEntrenamientos.remove(i);
                             }
-                        }
-                        MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
+                        }*/
+
+                        // Actualizar el adapter, recargará los datos desde la bd
+                        adapterEntrenamientos.actualizarListado();
                     }
                 });
                 builderEliminar_Confirmar.create().show();
@@ -316,8 +333,12 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             @Override
             public void onClick(final DialogInterface dialog, int which) {
 
-                listaEntrenamientos.remove(entrenamiento);
-                MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
+                RepositorioEntrenamientos.getInstance(MainActivity.this).eliminarEntrenamiento(entrenamiento);
+                ///////////////////****************** listaEntrenamientos.remove(entrenamiento);
+
+                // Actualizar el adapter, recargará los datos desde la bd
+                adapterEntrenamientos.actualizarListado();
+                /////////////////// MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
             }
         });
         builder.setNegativeButton("Cancelar", null);

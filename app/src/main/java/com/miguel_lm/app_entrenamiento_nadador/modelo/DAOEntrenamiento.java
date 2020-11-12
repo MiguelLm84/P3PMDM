@@ -1,9 +1,9 @@
 package com.miguel_lm.app_entrenamiento_nadador.modelo;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.RawQuery;
 import androidx.room.Update;
 
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
 @Dao
 public interface DAOEntrenamiento {
 
-    @Query("DELETE FROM Entrenamientos")
-    void eliminarEntrenamiento();
+    @Delete
+    void eliminarEntrenamiento(Entrenamiento entrenamiento);
 
     @Insert
     void insertar(Entrenamiento nuevoEntrenamiento);
