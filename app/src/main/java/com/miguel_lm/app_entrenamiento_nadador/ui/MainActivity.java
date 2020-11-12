@@ -194,6 +194,13 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
     private void accionVerEstadisticas() {
 
+
+        // Aquí va el código nuevo
+
+
+
+        // hasta aquí
+
         Entrenamiento mostrarInfoEstadisticas = null;
         for (int i=0;i<listaEntrenamientos.size();i++) {
             mostrarInfoEstadisticas = listaEntrenamientos.get(i);
