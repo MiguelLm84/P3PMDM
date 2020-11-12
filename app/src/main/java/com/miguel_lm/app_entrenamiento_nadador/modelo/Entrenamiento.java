@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-@Entity(tableName = "entrenamientos")
+@Entity(tableName = "Entrenamientos")
 public class Entrenamiento {
 
     @PrimaryKey(autoGenerate = true)
