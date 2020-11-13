@@ -2,9 +2,13 @@ package com.miguel_lm.app_entrenamiento_nadador.ui;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,18 +18,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.miguel_lm.app_entrenamiento_nadador.R;
+import com.miguel_lm.app_entrenamiento_nadador.modelo.DatosPersonales;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
     ////////////////////////  private List<Entrenamiento> listaEntrenamientos;
     private AdapterEntrenamientos adapterEntrenamientos;
+    private DatosPersonales datosPersonales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,188 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         recyclerViewEntrenamientos.setLayoutManager(new LinearLayoutManager(this));
         adapterEntrenamientos = new AdapterEntrenamientos(this, this);
         recyclerViewEntrenamientos.setAdapter(adapterEntrenamientos);
+
+
+        final EditText edNombre = this.findViewById( R.id.edNombreSheredPreferences);
+        final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
+        final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
+        final EditText edEdad = this.findViewById( R.id.editTextTextPersonName);
+        final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
+        final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
+
+        edNombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                MainActivity.this.datosPersonales.setNombre(edNombre.getText().toString());
+            }
+        });
+
+        edApellido.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                MainActivity.this.datosPersonales.setApellido( edApellido.getText().toString() );
+            }
+        });
+
+        edApellido2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                MainActivity.this.datosPersonales.setApellido2( edApellido2.getText().toString() );
+            }
+        });
+
+        edEdad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int edadParseado = Integer.parseInt(edEdad.getText().toString());
+                MainActivity.this.datosPersonales.setEdad(edadParseado);
+            }
+        });
+
+        edAltura.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                float altuarParseado = Float.parseFloat(edAltura.getText().toString());
+                MainActivity.this.datosPersonales.setPeso(altuarParseado);
+            }
+        });
+
+        edPeso.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                float pesoParseado = Float.parseFloat(edPeso.getText().toString());
+                MainActivity.this.datosPersonales.setPeso(pesoParseado);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        final EditText edNombre = this.findViewById( R.id.edNombreSheredPreferences);
+        final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
+        final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
+        final EditText edEdad = this.findViewById( R.id.editTextTextPersonName);
+        final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
+        final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
+
+        String nom = edNombre.getText().toString();
+        String ap = edApellido.getText().toString();
+        String ap2 = edApellido2.getText().toString();
+        String ed = edEdad.getText().toString();
+        int edParseado = Integer.parseInt(ed);
+        String alt = edAltura.getText().toString();
+        float altParseado = Float.parseFloat(alt);
+        String pe = edPeso.getText().toString();
+        float peParseado = Float.parseFloat(pe);
+
+        this.datosPersonales = new DatosPersonales( nom, ap, ap2, edParseado, altParseado, peParseado );
+
+        SharedPreferences preferencias = this.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        String nombre = preferencias.getString("Nombre", "NULL");
+        edNombre.setText(nombre);
+
+        String apellido = preferencias.getString("Primer Apellido","NULL");
+        edApellido.setText(apellido);
+
+        String apellido2 = preferencias.getString("Segundo Apellido","NULL");
+        edApellido2.setText(apellido2);
+
+        String edad = preferencias.getString("Edad","NULL");
+        edEdad.setText(edad);
+
+        String altura = preferencias.getString("Altura", "NULL");
+        edPeso.setText(altura);
+
+        String peso = preferencias.getString("Peso", "NULL");
+        edPeso.setText(peso);
+
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+
+        final EditText edNombre = this.findViewById( R.id.edNombreSheredPreferences);
+        final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
+        final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
+        final EditText edEdad = this.findViewById( R.id.editTextTextPersonName);
+        final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
+        final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
+
+        SharedPreferences preferencias = this.getSharedPreferences("preferencias",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+
+        editor.putString("Nombre", edNombre.getText().toString());
+        editor.putString("Primer Apellido", edApellido.getText().toString());
+        editor.putString("Segundo Apellido", edApellido2.getText().toString());
+        editor.putString("Edad", edEdad.getText().toString());
+        editor.putString("Altura", edAltura.getText().toString());
+        editor.putString("Peso", edPeso.getText().toString());
+        editor.apply();
     }
 
     @Override

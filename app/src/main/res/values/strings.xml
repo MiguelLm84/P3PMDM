@@ -40,5 +40,8 @@
     <string name="edSegundo_apellidoHint">Segundo Apellido</string>
     <string name="tvApellido_SheredPreferences">Apellido</string>
     <string name="tvApellido2_SheredPreferences">Apellido</string>
+    <string name="tvAltura_SheredPreferences">Altura</string>
+    <string name="tvEdad_SheredPreferences">Edad</string>
+    <string name="edEdad_SheredPrefferences">Edad</string>
 
 </resources>

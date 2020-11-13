@@ -15,7 +15,7 @@ import java.util.Locale;
 public class Entrenamiento {
 
     @PrimaryKey(autoGenerate = true)
-    private int key;
+    protected int key;
     @NonNull
     private Date fecha;
     @NonNull
@@ -50,7 +50,6 @@ public class Entrenamiento {
 
     public void modificar(Date fecha, int horas, int minutos, int segundos, int distanciaMts) {
 
-
         this.fecha = fecha;
         this.horas = horas;
         this.minutos = minutos;
@@ -82,6 +81,10 @@ public class Entrenamiento {
         return String.format("%02d:%02d:%02d", horas, minutos, segundos);
     }
 
+    public int getKey(){
+        return key;
+    }
+
     public int getHoras(){
 
         return horas;
@@ -90,6 +93,30 @@ public class Entrenamiento {
     public int getMinutos(){
 
         return minutos;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public void setFecha(@NonNull Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHoras(int horas) {
+        this.horas = horas;
+    }
+
+    public void setMinutos(int minutos) {
+        this.minutos = minutos;
+    }
+
+    public void setSegundos(int segundos) {
+        this.segundos = segundos;
+    }
+
+    public void setDistanciaMts(int distanciaMts) {
+        this.distanciaMts = distanciaMts;
     }
 
     public int getSegundos(){
