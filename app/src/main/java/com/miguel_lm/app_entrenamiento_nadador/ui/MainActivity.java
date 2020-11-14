@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -258,17 +259,22 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     }
     private void accionCrearModificarEntrenamiento ( final Entrenamiento entrenamientoAModificar){
 
+        //todo: modificar para que al pulsar la opción modificar salte al layout de modificar y no al de nuevo entrenamiento.
+
         final Calendar cal = Calendar.getInstance();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View dialogLayout = LayoutInflater.from(this).inflate(R.layout.dialog_entreno, null);
         builder.setView(dialogLayout);
+        final AlertDialog dialog = builder.create();
 
         final TextView textViewFecha = dialogLayout.findViewById(R.id.textViewFecha);
         final EditText editTextHoras = dialogLayout.findViewById(R.id.edTxtHoras);
         final EditText editTextMinutos = dialogLayout.findViewById(R.id.edTxtMinutos);
         final EditText editTextSegundos = dialogLayout.findViewById(R.id.edTxtSegundos);
         final EditText editTextDistancia = dialogLayout.findViewById(R.id.edTxtDistancia);
+        final Button buttonAceptar = dialogLayout.findViewById(R.id.btn_Ingresar);
+        final Button buttonCancelar = dialogLayout.findViewById(R.id.btn_Cancel);
         textViewFecha.setInputType(InputType.TYPE_NULL);
 
         if (entrenamientoAModificar != null) {
@@ -305,10 +311,12 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             }
         });
 
-       builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        buttonAceptar.setOnClickListener(new View.OnClickListener() {
+
+            List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(MainActivity.this).obtenerEntrenamientos();
 
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
 
                 String horas = editTextHoras.getText().toString();
                 String minutos = editTextMinutos.getText().toString();
@@ -330,18 +338,40 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                         return;
                 }
 
-                if (horasInt == 0 && minutosInt == 0 && segundosInt == 0) {
-                    Toast.makeText(MainActivity.this, "No se permite hora a 0", Toast.LENGTH_SHORT).show();
+                /*if (horasInt == 0) {
+                    Toast.makeText(MainActivity.this, "No se permite horas a 0", Toast.LENGTH_SHORT).show();
                         return;
-                }
+                }     //todo: permitir horas a 0 o no?,si se entrena menos de una hora?
 
-                if(horasInt > 5 || minutosInt > 60 || segundosInt > 60){
-
-                    Toast.makeText(MainActivity.this, "Datos inválidos", Toast.LENGTH_SHORT).show();
+                if (minutosInt == 0) {
+                    Toast.makeText(MainActivity.this, "No se permite minutos a 0", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(textViewFecha == null){     // todo: no permitir no escoger fecha
+                if (segundosInt == 0) {
+                    Toast.makeText(MainActivity.this, "No se permite segundos a 0", Toast.LENGTH_SHORT).show();
+                    return;
+                }*/
+
+                if(horasInt > 24){
+
+                    Toast.makeText(MainActivity.this, "No se permite horas mayores de 24.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(minutosInt > 60){
+
+                    Toast.makeText(MainActivity.this, "No se permite minutos mayores de 60.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(segundosInt > 60){
+
+                    Toast.makeText(MainActivity.this, "No se permite segundos mayores de 60.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(textViewFecha == null){
 
                     Toast.makeText(MainActivity.this, "Debe escoger una fecha", Toast.LENGTH_SHORT).show();
                     return;
@@ -363,17 +393,20 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
                     RepositorioEntrenamientos.getInstance(MainActivity.this).actualizarEntrenamiento(entrenamientoAModificar);
                 }
-
                 // Actualizar el adapter, recargará los datos desde la bd
                 adapterEntrenamientos.actualizarListado();
-
                 Toast.makeText(MainActivity.this, entrenamientoAModificar == null ? "Entrenamiento creado" : "Entrenamiento modificado", Toast.LENGTH_SHORT).show();
-
+                dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancelar", null);
+        buttonCancelar.setOnClickListener(new View.OnClickListener() {
 
-        AlertDialog dialog = builder.create();
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
@@ -462,6 +495,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         for (int i=0; i < listaEntrenamientos.size(); i++)
             arrayEntrenamientos[i] = listaEntrenamientos.get(i).getFechaFormateada() + ", " + listaEntrenamientos.get(i).getTiempoFormateado();
         builderElimina.setMultiChoiceItems(arrayEntrenamientos, entrenamientosSeleccionados, new DialogInterface.OnMultiChoiceClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int i, boolean isChecked) {
                 entrenamientosSeleccionados[i] = isChecked;
@@ -469,6 +503,9 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         });
 
         builderElimina.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+
+            List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(MainActivity.this).obtenerEntrenamientos();
+
             @Override
             public void onClick(final DialogInterface dialog, int which) {
 
@@ -509,6 +546,8 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         builder.setTitle("Eliminar elemento");
         builder.setMessage("\n¿Está seguro de querer eliminar esto?\n\n"+entrenamiento.toStringEntreno());
         builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+
+            List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(MainActivity.this).obtenerEntrenamientos();
 
             @Override
             public void onClick(final DialogInterface dialog, int which) {

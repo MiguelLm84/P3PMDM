@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/secondaryColor2"
     android:orientation="vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp">
+    android:padding="25dp">
 
     <TextView
         android:id="@+id/titulo_entreno"
@@ -142,5 +142,39 @@
         android:textColor="#2962FF"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:fontFamily="sans-serif-black"
+            android:onClick="onClickButtonCancelar"
+            android:text="@string/cancelarEntreno"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btn_Ingresar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:fontFamily="sans-serif-black"
+            android:onClick="onClickButtonAceptar"
+            android:text="@string/ingresarEntreno"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </LinearLayout>

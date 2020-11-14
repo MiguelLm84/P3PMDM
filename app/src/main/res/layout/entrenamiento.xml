@@ -26,6 +26,7 @@
                 android:fontFamily="@font/amaranth"
                 android:textColor="#020202"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewFecha"
                 tools:text="Distancia" />
@@ -37,6 +38,7 @@
                 android:fontFamily="@font/amaranth"
                 android:textColor="#020202"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textViewTiempo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,6 +52,7 @@
                 android:fontFamily="@font/amaranth"
                 android:textColor="#020202"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Tiempo" />
