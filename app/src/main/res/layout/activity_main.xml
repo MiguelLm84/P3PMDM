@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/pexels_eberhard_grossgasteiger_1624438"
     tools:context=".ui.MainActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,7 +27,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -36,12 +40,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:padding="16dp"
-            app:cardBackgroundColor="#B2DFDB"
+            app:cardBackgroundColor="#e0e0e0"
             app:cardCornerRadius="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/pexels_sasha_martynov_1260727"
                 android:paddingEnd="16dp"
                 android:paddingBottom="16dp"
                 tools:ignore="RtlSymmetry">
@@ -108,6 +113,7 @@
                     android:inputType="textPersonName"
                     android:textColor="#020202"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/edApellido2_SheredPreferences"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvApellido_SheredPreferences"
                     app:layout_constraintTop_toBottomOf="@+id/edNombreSheredPreferences" />
