@@ -43,5 +43,9 @@
     <string name="tvAltura_SheredPreferences">Altura</string>
     <string name="tvEdad_SheredPreferences">Edad</string>
     <string name="edEdad_SheredPrefferences">Edad</string>
-
+    <string name="edAlturaHint">Altura</string>
+    <string name="edPesoHint">Peso</string>
+    <string name="tvAnhos_SheredPreferences">Años</string>
+    <string name="tvMetros_SheredPreferences">m</string>
+    <string name="tvKg_SheredPreferences">Kg</string>
 </resources>

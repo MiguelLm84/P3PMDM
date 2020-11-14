@@ -34,7 +34,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SeleccionarEntreno {
 
-    ////////////////////////  private List<Entrenamiento> listaEntrenamientos;
+    private List<Entrenamiento> listaEntrenamientos;
     private AdapterEntrenamientos adapterEntrenamientos;
     private DatosPersonales datosPersonales;
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ///////////List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
+        List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         RecyclerView recyclerViewEntrenamientos = findViewById(R.id.recyclerViewEntrenamientos);
         recyclerViewEntrenamientos.setLayoutManager(new LinearLayoutManager(this));
@@ -122,8 +122,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
             @Override
             public void afterTextChanged(Editable s) {
-                int edadParseado = Integer.parseInt(edEdad.getText().toString());
-                MainActivity.this.datosPersonales.setEdad(edadParseado);
+                MainActivity.this.datosPersonales.setEdad(edEdad.getText().toString());
             }
         });
 
@@ -140,8 +139,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
             @Override
             public void afterTextChanged(Editable s) {
-                float altuarParseado = Float.parseFloat(edAltura.getText().toString());
-                MainActivity.this.datosPersonales.setPeso(altuarParseado);
+                MainActivity.this.datosPersonales.setPeso(edAltura.getText().toString());
             }
         });
 
@@ -158,8 +156,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
             @Override
             public void afterTextChanged(Editable s) {
-                float pesoParseado = Float.parseFloat(edPeso.getText().toString());
-                MainActivity.this.datosPersonales.setPeso(pesoParseado);
+                MainActivity.this.datosPersonales.setPeso(edPeso.getText().toString());
             }
         });
     }
@@ -180,13 +177,10 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         String ap = edApellido.getText().toString();
         String ap2 = edApellido2.getText().toString();
         String ed = edEdad.getText().toString();
-        int edParseado = Integer.parseInt(ed);
         String alt = edAltura.getText().toString();
-        float altParseado = Float.parseFloat(alt);
         String pe = edPeso.getText().toString();
-        float peParseado = Float.parseFloat(pe);
 
-        this.datosPersonales = new DatosPersonales( nom, ap, ap2, edParseado, altParseado, peParseado );
+        this.datosPersonales = new DatosPersonales( nom, ap, ap2, ed, alt, pe );
 
         SharedPreferences preferencias = this.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         String nombre = preferencias.getString("Nombre", "NULL");
@@ -361,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                     Entrenamiento nuevoEntrenamiento = new Entrenamiento(cal.getTime(), horasInt, minutosInt, segundosInt, distanciaInt);
 
                     RepositorioEntrenamientos.getInstance(MainActivity.this).insertar(nuevoEntrenamiento);
-                    //////////////////////// listaEntrenamientos.add(nuevoEntrenamiento);
+                    listaEntrenamientos.add(nuevoEntrenamiento);
 
                 } else {
                     entrenamientoAModificar.modificar(cal.getTime(), horasInt, minutosInt, segundosInt, distanciaInt);
@@ -489,13 +483,12 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                             if (entrenamientosSeleccionados[i])
                                 RepositorioEntrenamientos.getInstance(MainActivity.this).eliminarEntrenamiento(listaEntrenamientos.get(i));
 
-                        ////////////////////////
-                   /*     for (int i = listaEntrenamientos.size()-1; i>=0; i--) {
+                        for (int i = listaEntrenamientos.size()-1; i>=0; i--) {
                             if (entrenamientosSeleccionados[i]) {
                                 listaEntrenamientos.remove(i);
                             }
-                        }*/
-
+                        }
+                        MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
                         // Actualizar el adapter, recargará los datos desde la bd
                         adapterEntrenamientos.actualizarListado();
                     }
@@ -520,11 +513,11 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             public void onClick(final DialogInterface dialog, int which) {
 
                 RepositorioEntrenamientos.getInstance(MainActivity.this).eliminarEntrenamiento(entrenamiento);
-                ///////////////////****************** listaEntrenamientos.remove(entrenamiento);
+                listaEntrenamientos.remove(entrenamiento);
 
                 // Actualizar el adapter, recargará los datos desde la bd
                 adapterEntrenamientos.actualizarListado();
-                /////////////////// MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
+                MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
             }
         });
         builder.setNegativeButton("Cancelar", null);

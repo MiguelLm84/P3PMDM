@@ -4,13 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.*;
-
 import java.util.List;
 
 public class AdapterEntrenamientos extends RecyclerView.Adapter<ViewHolderEntrenamiento> {

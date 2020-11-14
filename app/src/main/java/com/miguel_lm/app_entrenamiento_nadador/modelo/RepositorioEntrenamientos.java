@@ -33,7 +33,7 @@ public class RepositorioEntrenamientos {
      * Constructor del repositorio, crea la BD y obtiene el DAO
      */
     private RepositorioEntrenamientos(Context context) {
-        EntrenamientosDataBase dataBase = Room.databaseBuilder(context.getApplicationContext(), EntrenamientosDataBase.class, "entrenamientos").build();
+        EntrenamientosDataBase dataBase = Room.databaseBuilder(context.getApplicationContext(), EntrenamientosDataBase.class, "entrenamientos").allowMainThreadQueries().build();
         daoEntrenamiento = dataBase.getDAOEntrenamiento();
     }
 

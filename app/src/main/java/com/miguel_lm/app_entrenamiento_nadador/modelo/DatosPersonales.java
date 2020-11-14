@@ -2,7 +2,7 @@ package com.miguel_lm.app_entrenamiento_nadador.modelo;
 
 public class DatosPersonales {
 
-    public DatosPersonales(String n, String ap, String ap2, int ed, float alt, float pe) {
+    public DatosPersonales(String n, String ap, String ap2, String ed, String alt, String pe) {
         this.setNombre( n );
         this.setApellido( ap );
         this.setApellido2( ap2 );
@@ -39,32 +39,32 @@ public class DatosPersonales {
         this.apellido2 = apellido2;
     }
 
-    final public int getEdad() {
+    final public String getEdad() {
 
         return edad;
     }
 
-    final public void setEdad(int edad) {
+    final public void setEdad(String edad) {
 
         this.edad = edad;
     }
 
-    final public float getAltura() {
+    final public String getAltura() {
 
         return altura;
     }
 
-    final public void setAltura(float altura) {
+    final public void setAltura(String altura) {
 
         this.altura = altura;
     }
 
-    final public float getPeso() {
+    final public String getPeso() {
 
         return peso;
     }
 
-    final public void setPeso(float peso) {
+    final public void setPeso(String peso) {
 
         this.peso = peso;
     }
@@ -72,7 +72,7 @@ public class DatosPersonales {
     private String nombre;
     private String apellido;
     private String apellido2;
-    private int edad;
-    private float altura;
-    private float peso;
+    private String edad;
+    private String altura;
+    private String peso;
 }
