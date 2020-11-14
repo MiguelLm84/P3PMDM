@@ -48,4 +48,7 @@
     <string name="tvAnhos_SheredPreferences">Años</string>
     <string name="tvMetros_SheredPreferences">m</string>
     <string name="tvKg_SheredPreferences">Kg</string>
+    <string name="tv_tituloSlash">Trainning Swimming</string>
+    <string name="tv_tituloSlashRojo">Trainning Swimming</string>
+    <string name="tv_tituloSlashNegro">Trainning Swimming</string>
 </resources>
