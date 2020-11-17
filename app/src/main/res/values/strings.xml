@@ -22,7 +22,7 @@
     <string name="crear_entreno">Crear Entrenamiento</string>
     <string name="fecha_dialog">Fecha</string>
     <string name="modificar_entreno">Modificar Entrenamiento</string>
-    <string name="tminutos_por_km">Minutos por Km</string>
+
     <string name="titulo_estadisticas">Estadísticas</string>
     <string name="segundos_por_km">Segundos por Km</string>
     <string name="velocidad_media">Velocidad Media</string>
@@ -33,11 +33,6 @@
     <string name="tiempo_titulo">Tiempo</string>
     <string name="distancia_titulo_info">Distancia</string>
     <string name="nombreSheredPreferences">Nombre</string>
-    <string name="edNombreHint">Nombre</string>
-    <string name="edApellidoHint">Apellido</string>
-    <string name="edPrimer_apellidoHint">Primer Apellido</string>
-    <string name="edApellido2Hint">Apellido</string>
-    <string name="edSegundo_apellidoHint">Segundo Apellido</string>
     <string name="tvApellido_SheredPreferences">Apellido</string>
     <string name="tvApellido2_SheredPreferences">Apellido</string>
     <string name="tvAltura_SheredPreferences">Altura</string>
@@ -51,4 +46,7 @@
     <string name="tv_tituloSlash">Trainning Swimming</string>
     <string name="tv_tituloSlashRojo">Trainning Swimming</string>
     <string name="tv_tituloSlashNegro">Trainning Swimming</string>
+    <string name="tv_km_nadados_en_total">Km Nadados en Total</string>
+    <string name="btn_Aceptar">Aceptar</string>
+    <string name="tv_media_minutos_por_km">Media minutos por Km</string>
 </resources>

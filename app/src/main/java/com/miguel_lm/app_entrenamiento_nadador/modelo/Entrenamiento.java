@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.miguel_lm.app_entrenamiento_nadador.ui.MainActivity;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -35,6 +39,12 @@ public class Entrenamiento {
     @Ignore
     private float segundosPorKm;
 
+    @Ignore
+    private ArrayList<Integer> listaDistancia=new ArrayList<>();
+
+    @Ignore
+    private ArrayList<Float> listaTiempoEnMin=new ArrayList<>();
+
     public Entrenamiento(Date fecha, int horas, int minutos, int segundos, int distanciaMts) {  //int hora, int minutos, int segundos
 
         this.fecha = fecha;
@@ -43,6 +53,7 @@ public class Entrenamiento {
         this.segundos=segundos;
         this.distanciaMts = distanciaMts;
 
+        listaDistancia.add(distanciaMts);
         recalcularTiempos();
     }
 
@@ -60,6 +71,7 @@ public class Entrenamiento {
     private void recalcularTiempos() {
 
         tiempoEnMinutos = (horas*60)+minutos+(segundos/60);
+        listaTiempoEnMin.add(tiempoEnMinutos);
         tiempoEnSegundos = segundos * minutos*60 * horas*3600;
         minutosPorKm = minutosPorKm();
         segundosPorKm = segundosPorKm();
@@ -141,6 +153,42 @@ public class Entrenamiento {
         String segPorKm = formateoDecimal3.format(segundosPorKm())+" seg.";
 
         return segPorKm;
+    }
+
+    public String getkmNadadosTotal(){  //todo: recoger en la lista todos los entrenamientos de creados para hacer el cálculo.
+
+        int distanciaTotal=0;
+
+        for(int i=0;i<listaDistancia.size();i++){
+            int distancia=listaDistancia.get(i);
+            distanciaTotal=distanciaTotal+distancia;
+        }
+        float distanciaEnKm=(float)distanciaTotal/1000;
+        String distanciaEnKmParseada=distanciaEnKm+" Km";
+
+        return distanciaEnKmParseada;
+    }
+
+    public String getMediaMinPorKm(){
+
+        DecimalFormat formateoDecimal3 = new DecimalFormat("#.00");
+        String resultado=null;
+        int distanciaTotal=0;
+        float tiempoTotal=0;
+
+        for(int i=0;i<listaTiempoEnMin.size();i++){
+            float tiempoMin=listaTiempoEnMin.get(i);
+            tiempoTotal=tiempoTotal+tiempoMin;
+        }
+
+        for(int i=0;i<listaDistancia.size();i++){
+            int distancia=listaDistancia.get(i);
+            distanciaTotal=distanciaTotal+distancia;
+        }
+        float calculo=(float)distanciaTotal/tiempoTotal;
+        resultado=formateoDecimal3.format(calculo)+" m/km";
+
+        return resultado;
     }
 
     public int getTiempoEnSegundos() {

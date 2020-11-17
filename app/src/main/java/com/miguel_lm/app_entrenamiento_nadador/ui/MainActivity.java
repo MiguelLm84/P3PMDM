@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -30,13 +29,12 @@ import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SeleccionarEntreno {
 
-    private List<Entrenamiento> listaEntrenamientos;
+    //private List<Entrenamiento> listaEntrenamientos;
     private AdapterEntrenamientos adapterEntrenamientos;
     private DatosPersonales datosPersonales;
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
+        //List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         RecyclerView recyclerViewEntrenamientos = findViewById(R.id.recyclerViewEntrenamientos);
         recyclerViewEntrenamientos.setLayoutManager(new LinearLayoutManager(this));
@@ -54,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         recyclerViewEntrenamientos.setAdapter(adapterEntrenamientos);
 
 
-        final EditText edNombre = this.findViewById( R.id.edNombreSheredPreferences);
+        final EditText edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
         final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
         final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
-        final EditText edEdad = this.findViewById( R.id.editTextTextPersonName);
+        final EditText edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
         final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
         final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
 
@@ -91,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
             @Override
             public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setApellido( edApellido.getText().toString() );
+                MainActivity.this.datosPersonales.setApellido(edApellido.getText().toString());
             }
         });
 
@@ -108,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
             @Override
             public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setApellido2( edApellido2.getText().toString() );
+                MainActivity.this.datosPersonales.setApellido2(edApellido2.getText().toString());
             }
         });
 
@@ -169,10 +167,10 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         super.onResume();
 
-        final EditText edNombre = this.findViewById( R.id.edNombreSheredPreferences);
+        final EditText edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
         final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
         final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
-        final EditText edEdad = this.findViewById( R.id.editTextTextPersonName);
+        final EditText edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
         final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
         final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
 
@@ -211,10 +209,10 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     {
         super.onPause();
 
-        final EditText edNombre = this.findViewById( R.id.edNombreSheredPreferences);
+        final EditText edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
         final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
         final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
-        final EditText edEdad = this.findViewById( R.id.editTextTextPersonName);
+        final EditText edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
         final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
         final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
 
@@ -274,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         final EditText editTextMinutos = dialogLayout.findViewById(R.id.edTxtMinutos);
         final EditText editTextSegundos = dialogLayout.findViewById(R.id.edTxtSegundos);
         final EditText editTextDistancia = dialogLayout.findViewById(R.id.edTxtDistancia);
-        final Button buttonAceptar = dialogLayout.findViewById(R.id.btn_Ingresar);
+        final Button buttonAceptar = dialogLayout.findViewById(R.id.btn_Aceptar);
         final Button buttonCancelar = dialogLayout.findViewById(R.id.btn_Cancel);
         textViewFecha.setInputType(InputType.TYPE_NULL);
 
@@ -424,17 +422,22 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         builder.setIcon(R.drawable.ic_list);
         final View dialogLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_estadisticas, null);
         builder.setView(dialogLayout);
+        final  AlertDialog dialog = builder.create();
 
-        TextView tvMinPorKm=dialogLayout.findViewById(R.id.tvMinPorKm);
-        TextView tvSegPorKm=dialogLayout.findViewById(R.id.tv_segundos);
-        TextView tvVelMedia=dialogLayout.findViewById(R.id.tv_DistanciaTrainning);
+        TextView tvMinPorKm=dialogLayout.findViewById(R.id.tv_KmNadados);
+        TextView tv_mediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
+        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
-        tvMinPorKm.setText(mostrarInfoEstadisticas.getMinutosPorKm());
-        tvSegPorKm.setText(mostrarInfoEstadisticas.getSegundosPorKm());
-        tvVelMedia.setText(mostrarInfoEstadisticas.toStringVelocidadMedia());
+        tvMinPorKm.setText(mostrarInfoEstadisticas.getkmNadadosTotal());
+        tv_mediaMinPorKm.setText(mostrarInfoEstadisticas.getMediaMinPorKm());
 
-        builder.setPositiveButton("Aceptar", null);
-        AlertDialog dialog = builder.create();
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
 
@@ -576,17 +579,22 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View dialogLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_estadisticas, null);
         builder.setView(dialogLayout);
+        final AlertDialog dialog = builder.create();
 
-        TextView tvMinPorKm=dialogLayout.findViewById(R.id.tvMinPorKm);
-        TextView tvSegPorKm=dialogLayout.findViewById(R.id.tv_segundos);
-        TextView tvVelMedia=dialogLayout.findViewById(R.id.tv_DistanciaTrainning);
+        TextView tvKmNadados=dialogLayout.findViewById(R.id.tv_KmNadados);
+        TextView tvMediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
+        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
-        tvMinPorKm.setText(entrenamiento.getMinutosPorKm());
-        tvSegPorKm.setText(entrenamiento.getSegundosPorKm());
-        tvVelMedia.setText(entrenamiento.toStringVelocidadMedia());
+        tvKmNadados.setText(entrenamiento.getkmNadadosTotal());
+        tvMediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
 
-        builder.setPositiveButton("Aceptar", null);
-        AlertDialog dialog = builder.create();
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
 
@@ -596,17 +604,24 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         final View dialogLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_info_entreno, null);
         builder.setView(dialogLayout);
+        final AlertDialog dialog = builder.create();
 
         TextView infoFecha=dialogLayout.findViewById(R.id.tv_fecha_info_entreno);
         TextView infoTiempo=dialogLayout.findViewById(R.id.tv_tiempo_info_entreno);
         TextView infoDistancia=dialogLayout.findViewById(R.id.tv_distancia_info_entreno);
+        Button bt_Aceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
         infoFecha.setText(entrenamiento.getFechaFormateada());
         infoTiempo.setText(entrenamiento.getTiempoFormateado()+" h.");
         infoDistancia.setText(entrenamiento.getDistanciaMts()+" m.");
 
-        builder.setPositiveButton("Aceptar", null);
-        AlertDialog dialog = builder.create();
+        bt_Aceptar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
 }

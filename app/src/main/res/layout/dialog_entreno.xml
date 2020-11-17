@@ -30,7 +30,7 @@
         tools:ignore="TextViewEdits" />
 
     <TextView
-        android:id="@+id/tV_FechaTrainning"
+        android:id="@+id/tv_KmNadadosTotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -59,7 +59,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tV_TiempoTrainning"
+        android:id="@+id/tv_mediaMinPorKmTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -165,7 +165,7 @@
             android:layout_height="match_parent" />
 
         <Button
-            android:id="@+id/btn_Ingresar"
+            android:id="@+id/btn_Aceptar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
