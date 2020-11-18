@@ -39,8 +39,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:fontFamily="@font/amaranth"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:textColor="#2962FF"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -64,8 +65,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:fontFamily="@font/amaranth"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:textColor="#2962FF"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -88,9 +90,64 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/amaranth"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#2962FF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_minPrKmTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:paddingTop="5dp"
+        android:text="@string/tv_minutos_kmTitulo"
+        android:textColor="#020202"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_minPorKm_Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/amaranth"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#2962FF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_velMed_titulo_info_entreno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:paddingTop="5dp"
+        android:text="@string/tv_velocidad_media_km_h_titulo"
+        android:textColor="#020202"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_velMed_info_entrno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:fontFamily="@font/amaranth"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:textColor="#2962FF"
         android:textSize="16sp"
         android:textStyle="bold" />

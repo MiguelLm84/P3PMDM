@@ -22,7 +22,6 @@
     <string name="crear_entreno">Crear Entrenamiento</string>
     <string name="fecha_dialog">Fecha</string>
     <string name="modificar_entreno">Modificar Entrenamiento</string>
-
     <string name="titulo_estadisticas">Estadísticas</string>
     <string name="segundos_por_km">Segundos por Km</string>
     <string name="velocidad_media">Velocidad Media</string>
@@ -49,4 +48,7 @@
     <string name="tv_km_nadados_en_total">Km Nadados en Total</string>
     <string name="btn_Aceptar">Aceptar</string>
     <string name="tv_media_minutos_por_km">Media minutos por Km</string>
+    <string name="tv_minutos_kmTitulo">Minutos /km</string>
+    <string name="tv_distancia_total_km">Distancia Total (km)</string>
+    <string name="tv_velocidad_media_km_h_titulo">Velocidad Media (km/h)</string>
 </resources>

@@ -206,6 +206,27 @@ public class Entrenamiento {
         return (1000*tiempoEnSegundos/distanciaMts);
     }
 
+    public float velocidadMediaEntreno(){
+
+        //todo: Hacer método velocidadMedia() para cada entreno.
+
+        float kms=distanciaMts/(float)1000;
+        float minTotales=(segundos/(float)60)+minutos;
+        float tiempoTotalHoras=(minTotales/(float)60)+horas;
+        float velKmH=kms/tiempoTotalHoras;
+
+
+        return velKmH;
+    }
+
+    public String toStringVelMedEntreno(){
+
+        DecimalFormat formateoDecimal2 = new DecimalFormat("#0.00");
+        String velMedEntreno=formateoDecimal2.format(velocidadMediaEntreno())+" km/h";
+
+        return velMedEntreno;
+    }
+
     private float velocidadMedia(){
 
         float kms=distanciaMts/(float)1000;

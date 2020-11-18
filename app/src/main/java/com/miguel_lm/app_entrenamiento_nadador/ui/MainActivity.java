@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
-
         RecyclerView recyclerViewEntrenamientos = findViewById(R.id.recyclerViewEntrenamientos);
         recyclerViewEntrenamientos.setLayoutManager(new LinearLayoutManager(this));
         adapterEntrenamientos = new AdapterEntrenamientos(this, this);
@@ -208,20 +206,23 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         String peso = preferencias.getString("Peso", "NULL");
         edPeso.setText(peso);
 
+        String ruta = "infoEstadisticas.txt";
+        File infoEstadisticas = new File(ruta);  //todo: No se crea el archivo!!. Solucionarlo!!.
+        infoEstadisticas.getAbsolutePath();
 
-        File infoEstadisticas = new File(".\\infoEstadisticas.txt");
         if(!infoEstadisticas.exists()){
             try {
                 infoEstadisticas.createNewFile();
             } catch (IOException e) {
-                Toast.makeText(this,"Error al crear el archivo "+infoEstadisticas,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Error al crear el archivo "+infoEstadisticas,Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }
         Toast.makeText(this,"Espacio disponible en Memoria Interna: "+espacioDisponibleMemInterna(),Toast.LENGTH_LONG).show();
         try {
+
             FileWriter fw = new FileWriter(infoEstadisticas);
-            //fw.write();
+            fw.write(listarEntrenamientos());
             fw.close();
         } catch (IOException e) {
             Toast.makeText(this,"Error al intentar escribir en el archivo "+infoEstadisticas,Toast.LENGTH_SHORT).show();
@@ -283,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     }
     private void accionCrearModificarEntrenamiento ( final Entrenamiento entrenamientoAModificar){
 
-        //todo: modificar para que al pulsar la opción modificar salte al layout de modificar y no al de nuevo entrenamiento.
+        //todo: ajustar para que al pulsar la opción modificar salte al layout de modificar y no al de nuevo entrenamiento.
 
         final Calendar cal = Calendar.getInstance();
 
@@ -615,10 +616,12 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         TextView tvKmNadados=dialogLayout.findViewById(R.id.tv_KmNadados);
         TextView tvMediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
+        TextView tvVelMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
         Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
         tvKmNadados.setText(entrenamiento.getkmNadadosTotal());
         tvMediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
+        tvVelMed.setText(entrenamiento.toStringVelocidadMedia());
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -641,11 +644,15 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         TextView infoFecha=dialogLayout.findViewById(R.id.tv_fecha_info_entreno);
         TextView infoTiempo=dialogLayout.findViewById(R.id.tv_tiempo_info_entreno);
         TextView infoDistancia=dialogLayout.findViewById(R.id.tv_distancia_info_entreno);
+        TextView infoMinPorKm=dialogLayout.findViewById(R.id.tv_minPorKm_Info);
+        TextView infoVelMed=dialogLayout.findViewById(R.id.tv_velMed_info_entrno);
         Button bt_Aceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
         infoFecha.setText(entrenamiento.getFechaFormateada());
         infoTiempo.setText(entrenamiento.getTiempoFormateado()+" h.");
         infoDistancia.setText(entrenamiento.getDistanciaMts()+" m.");
+        infoMinPorKm.setText(entrenamiento.getMinutosPorKm());
+        infoVelMed.setText(entrenamiento.toStringVelMedEntreno());
 
         bt_Aceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -665,5 +672,16 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         espacioDisponible = Formatter.formatShortFileSize(getApplicationContext(), espacioDisponibleBytes);
 
         return espacioDisponible;
+    }
+
+    public String listarEntrenamientos(){
+
+        String entrenos = null;
+        List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
+        for(int i=0;i<listaEntrenamientos.size();i++){
+            entrenos = "\n·FECHA: "+listaEntrenamientos.get(i).getFechaFormateada()+"\n·TIEMPO: "+listaEntrenamientos.get(i).getFechaFormateada()+
+                    "\n·DISTANCIA: "+listaEntrenamientos.get(i).getDistanciaMts()+"\n\n";
+        }
+        return entrenos;
     }
 }
