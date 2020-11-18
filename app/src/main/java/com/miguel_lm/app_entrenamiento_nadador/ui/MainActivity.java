@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StatFs;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +29,10 @@ import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.DatosPersonales;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -202,6 +208,25 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         String peso = preferencias.getString("Peso", "NULL");
         edPeso.setText(peso);
 
+
+        File infoEstadisticas = new File(".\\infoEstadisticas.txt");
+        if(!infoEstadisticas.exists()){
+            try {
+                infoEstadisticas.createNewFile();
+            } catch (IOException e) {
+                Toast.makeText(this,"Error al crear el archivo "+infoEstadisticas,Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+        Toast.makeText(this,"Espacio disponible en Memoria Interna: "+espacioDisponibleMemInterna(),Toast.LENGTH_LONG).show();
+        try {
+            FileWriter fw = new FileWriter(infoEstadisticas);
+            //fw.write();
+            fw.close();
+        } catch (IOException e) {
+            Toast.makeText(this,"Error al intentar escribir en el archivo "+infoEstadisticas,Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -337,6 +362,11 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                         return;
                 }
 
+                if (horasInt == 0 && minutosInt == 0 && segundosInt == 0) {
+                    Toast.makeText(MainActivity.this, "No se permiten todos los valores a 0", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 /*if (horasInt == 0) {
                     Toast.makeText(MainActivity.this, "No se permite horas a 0", Toast.LENGTH_SHORT).show();
                         return;
@@ -426,10 +456,12 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         TextView tvMinPorKm=dialogLayout.findViewById(R.id.tv_KmNadados);
         TextView tv_mediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
+        TextView tv_velocidadMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
         Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
         tvMinPorKm.setText(mostrarInfoEstadisticas.getkmNadadosTotal());
         tv_mediaMinPorKm.setText(mostrarInfoEstadisticas.getMediaMinPorKm());
+        tv_velocidadMed.setText(mostrarInfoEstadisticas.toStringVelocidadMedia());
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -623,5 +655,15 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             }
         });
         dialog.show();
+    }
+
+    public String espacioDisponibleMemInterna(){
+
+        String espacioDisponible = null;
+        File internalStorageFile=getFilesDir();
+        long espacioDisponibleBytes = new StatFs(internalStorageFile.getPath()).getAvailableBytes();
+        espacioDisponible = Formatter.formatShortFileSize(getApplicationContext(), espacioDisponibleBytes);
+
+        return espacioDisponible;
     }
 }

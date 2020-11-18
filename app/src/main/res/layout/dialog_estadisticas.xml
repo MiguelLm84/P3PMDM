@@ -68,27 +68,51 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_mediaMinPorKm"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="1"
+        android:autofillHints=""
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="#2962FF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_velocidadMediaTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/velocidad_media"
+        android:textColor="#020202"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_mediaMinPorKm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_weight="1"
-            android:autofillHints=""
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textColor="#2962FF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_velocidadMedia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="#2962FF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:ignore="TextViewEdits" />
 
     <LinearLayout
         android:layout_width="match_parent"
