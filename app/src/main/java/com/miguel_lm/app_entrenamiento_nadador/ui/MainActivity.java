@@ -8,9 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
-import android.text.Editable;
+import android.preference.PreferenceManager;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,14 +21,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.miguel_lm.app_entrenamiento_nadador.R;
-import com.miguel_lm.app_entrenamiento_nadador.modelo.DatosPersonales;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,7 +42,22 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements SeleccionarEntreno {
 
     private AdapterEntrenamientos adapterEntrenamientos;
-    private DatosPersonales datosPersonales;
+
+    private EditText edNombre;
+    private EditText edApellido;
+    private EditText edApellido2;
+    private EditText edEdad;
+    private EditText edAltura;
+    private EditText edPeso;
+
+    // Constantes para las claves de las preferencias y evitar errores
+    private static final String PREF_FICHERO = "preferencias";
+    private static final String PREF_NOMBRE = "Nombre";
+    private static final String PREF_APELLIDO1 = "Primer Apellido";
+    private static final String PREF_APELLIDO2 = "Segundo Apellido";
+    private static final String PREF_EDIT = "Edad";
+    private static final String PREF_ALTURA = "Altura";
+    private static final String PREF_PESO = "Peso";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,120 +65,20 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Configurar listado
         RecyclerView recyclerViewEntrenamientos = findViewById(R.id.recyclerViewEntrenamientos);
         recyclerViewEntrenamientos.setLayoutManager(new LinearLayoutManager(this));
         adapterEntrenamientos = new AdapterEntrenamientos(this, this);
         recyclerViewEntrenamientos.setAdapter(adapterEntrenamientos);
 
+        // Recoger los controles
+        edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
+        edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
+        edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
+        edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
+        edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
+        edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
 
-        final EditText edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
-        final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
-        final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
-        final EditText edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
-        final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
-        final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
-
-        edNombre.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setNombre(edNombre.getText().toString());
-            }
-        });
-
-        edApellido.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setApellido(edApellido.getText().toString());
-            }
-        });
-
-        edApellido2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setApellido2(edApellido2.getText().toString());
-            }
-        });
-
-        edEdad.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setEdad(edEdad.getText().toString());
-            }
-        });
-
-        edAltura.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setPeso(edAltura.getText().toString());
-            }
-        });
-
-        edPeso.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                MainActivity.this.datosPersonales.setPeso(edPeso.getText().toString());
-            }
-        });
     }
 
     @Override
@@ -170,40 +86,81 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         super.onResume();
 
-        final EditText edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
-        final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
-        final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
-        final EditText edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
-        final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
-        final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
+        leerDatosDesdePreferencias();
 
-        String nom = edNombre.getText().toString();
-        String ap = edApellido.getText().toString();
-        String ap2 = edApellido2.getText().toString();
-        String ed = edEdad.getText().toString();
-        String alt = edAltura.getText().toString();
-        String pe = edPeso.getText().toString();
+        generarFichero();
+    }
 
-        this.datosPersonales = new DatosPersonales( nom, ap, ap2, ed, alt, pe );
+    @Override
+    public void onPause()
+    {
+        super.onPause();
 
-        SharedPreferences preferencias = this.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
-        String nombre = preferencias.getString("Nombre", "NULL");
+        escribirDatosEnPreferencias();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_principal, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.accionCrearEntrenamiento) {
+            accionCrearEntrenamiento(null);
+        } else if (item.getItemId() == R.id.accionVerEstadisticas) {
+            accionVerEstadisticas();
+        } else if (item.getItemId() == R.id.accionModificar) {
+            accionModificar();
+        } else if (item.getItemId() == R.id.accionEliminar) {
+            accionEliminar();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void escribirDatosEnPreferencias() {
+
+        SharedPreferences preferencias = this.getSharedPreferences(PREF_FICHERO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+
+        editor.putString(PREF_NOMBRE, edNombre.getText().toString());
+        editor.putString(PREF_APELLIDO1, edApellido.getText().toString());
+        editor.putString(PREF_APELLIDO2, edApellido2.getText().toString());
+        editor.putString(PREF_EDIT, edEdad.getText().toString());
+        editor.putString(PREF_ALTURA, edAltura.getText().toString());
+        editor.putString(PREF_PESO, edPeso.getText().toString());
+        editor.apply();
+    }
+
+
+    private void leerDatosDesdePreferencias() {
+
+        SharedPreferences preferencias = this.getSharedPreferences(PREF_FICHERO, Context.MODE_PRIVATE);
+        String nombre = preferencias.getString(PREF_NOMBRE, "");
         edNombre.setText(nombre);
 
-        String apellido = preferencias.getString("Primer Apellido","NULL");
+        String apellido = preferencias.getString(PREF_APELLIDO1,"");
         edApellido.setText(apellido);
 
-        String apellido2 = preferencias.getString("Segundo Apellido","NULL");
+        String apellido2 = preferencias.getString(PREF_APELLIDO2,"");
         edApellido2.setText(apellido2);
 
-        String edad = preferencias.getString("Edad","NULL");
+        String edad = preferencias.getString(PREF_EDIT,"");
         edEdad.setText(edad);
 
-        String altura = preferencias.getString("Altura", "NULL");
+        String altura = preferencias.getString(PREF_ALTURA, "");
         edPeso.setText(altura);
 
-        String peso = preferencias.getString("Peso", "NULL");
+        String peso = preferencias.getString(PREF_PESO, "");
         edPeso.setText(peso);
+    }
+
+    private void generarFichero() {
 
         isExternalStorageReadable();
         String ruta = "infoEstadisticas.txt";
@@ -231,54 +188,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         }
 
         Toast.makeText(this,"Espacio disponible en Memoria Interna: "+espacioDisponibleMemInterna(),Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-
-        final EditText edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
-        final EditText edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
-        final EditText edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
-        final EditText edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
-        final EditText edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
-        final EditText edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
-
-        SharedPreferences preferencias = this.getSharedPreferences("preferencias",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencias.edit();
-
-        editor.putString("Nombre", edNombre.getText().toString());
-        editor.putString("Primer Apellido", edApellido.getText().toString());
-        editor.putString("Segundo Apellido", edApellido2.getText().toString());
-        editor.putString("Edad", edEdad.getText().toString());
-        editor.putString("Altura", edAltura.getText().toString());
-        editor.putString("Peso", edPeso.getText().toString());
-        editor.apply();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_principal, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == R.id.accionCrearEntrenamiento) {
-            accionCrearEntrenamiento(null);
-        } else if (item.getItemId() == R.id.accionVerEstadisticas) {
-            accionVerEstadisticas();
-        } else if (item.getItemId() == R.id.accionModificar) {
-            accionModificar();
-        } else if (item.getItemId() == R.id.accionEliminar) {
-            accionEliminar();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void accionCrearEntrenamiento(View view) {
