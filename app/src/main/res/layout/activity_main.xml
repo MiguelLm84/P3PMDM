@@ -7,23 +7,6 @@
     android:background="@drawable/pexels_eberhard_grossgasteiger_1624438"
     tools:context=".ui.MainActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:backgroundTint="#F44336"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="accionCrearEntrenamiento"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.94"
-        app:srcCompat="@drawable/add" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,7 +52,7 @@
                 <EditText
                     android:id="@+id/edNombre_SheredPreferences"
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="36dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="33dp"
                     android:layout_marginEnd="24dp"
@@ -83,8 +66,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.163"
                     app:layout_constraintStart_toEndOf="@+id/tvNombre_SheredPreferences"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="LabelFor" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvApellido_SheredPreferences"
@@ -105,7 +87,7 @@
                 <EditText
                     android:id="@+id/edApellido1_SheredPreferences"
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="36dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="24dp"
@@ -140,7 +122,7 @@
                 <EditText
                     android:id="@+id/edApellido2_SheredPreferences"
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="36dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="24dp"
@@ -186,7 +168,7 @@
                     <EditText
                         android:id="@+id/edEdad_SheredPreferences"
                         android:layout_width="35dp"
-                        android:layout_height="20dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="2dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="2dp"
@@ -265,7 +247,7 @@
                     <EditText
                         android:id="@+id/edAltura_SheredPreferences"
                         android:layout_width="35dp"
-                        android:layout_height="20dp"
+                        android:layout_height="36dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="2dp"
                         android:autofillHints=""
@@ -283,7 +265,7 @@
                     <EditText
                         android:id="@+id/edPeso_SheredPreferences"
                         android:layout_width="35dp"
-                        android:layout_height="20dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="3dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="2dp"
@@ -325,5 +307,22 @@
             android:layout_height="match_parent"
             android:padding="8dp" />
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:backgroundTint="#F44336"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="accionCrearEntrenamiento"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94"
+        app:srcCompat="@drawable/add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
