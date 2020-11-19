@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StatFs;
 import android.text.Editable;
 import android.text.InputType;
@@ -29,7 +30,6 @@ import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.DatosPersonales;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,7 +40,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SeleccionarEntreno {
 
-    //private List<Entrenamiento> listaEntrenamientos;
     private AdapterEntrenamientos adapterEntrenamientos;
     private DatosPersonales datosPersonales;
 
@@ -206,28 +205,32 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         String peso = preferencias.getString("Peso", "NULL");
         edPeso.setText(peso);
 
+        isExternalStorageReadable();
         String ruta = "infoEstadisticas.txt";
-        File infoEstadisticas = new File(ruta);  //todo: No se crea el archivo!!. Solucionarlo!!.
-        infoEstadisticas.getAbsolutePath();
+        File infoEstadisticas = new File(Environment.getExternalStorageDirectory(), "Estadísticas");
 
         if(!infoEstadisticas.exists()){
             try {
                 infoEstadisticas.createNewFile();
+
             } catch (IOException e) {
                 Toast.makeText(this,"Error al crear el archivo "+infoEstadisticas,Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }
-        Toast.makeText(this,"Espacio disponible en Memoria Interna: "+espacioDisponibleMemInterna(),Toast.LENGTH_LONG).show();
-        try {
 
-            FileWriter fw = new FileWriter(infoEstadisticas);
+        try {
+            File archivoTxt = new File(infoEstadisticas, ruta);
+            FileWriter fw = new FileWriter(archivoTxt);
             fw.write(listarEntrenamientos());
             fw.close();
+
         } catch (IOException e) {
             Toast.makeText(this,"Error al intentar escribir en el archivo "+infoEstadisticas,Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+
+        Toast.makeText(this,"Espacio disponible en Memoria Interna: "+espacioDisponibleMemInterna(),Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -683,5 +686,21 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                     "\n·DISTANCIA: "+listaEntrenamientos.get(i).getDistanciaMts()+"\n\n";
         }
         return entrenos;
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
     }
 }
