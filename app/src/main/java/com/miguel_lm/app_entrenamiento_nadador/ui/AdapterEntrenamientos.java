@@ -13,8 +13,8 @@ import java.util.List;
 public class AdapterEntrenamientos extends RecyclerView.Adapter<ViewHolderEntrenamiento> {
 
     private List<Entrenamiento> listEntrenamientos;
-    private Context context;
-    private SeleccionarEntreno seleccionarEntrenamiento;
+    private final Context context;
+    private final SeleccionarEntreno seleccionarEntrenamiento;
 
     public AdapterEntrenamientos(final Context context, SeleccionarEntreno seleccionarEntrenamient) {
         this.listEntrenamientos = RepositorioEntrenamientos.getInstance(context).obtenerEntrenamientos();
@@ -22,11 +22,6 @@ public class AdapterEntrenamientos extends RecyclerView.Adapter<ViewHolderEntren
         this.seleccionarEntrenamiento = seleccionarEntrenamient;
     }
 
-    /*public void actualizarListado(List<Entrenamiento> listEntrenamientos) {
-        this.listEntrenamientos = listEntrenamientos;
-        notifyDataSetChanged();
-    }
-    */
     public void actualizarListado() {
         this.listEntrenamientos = RepositorioEntrenamientos.getInstance(context).obtenerEntrenamientos();
         notifyDataSetChanged();

@@ -37,7 +37,6 @@ public class ViewHolderEntrenamiento extends RecyclerView.ViewHolder {
         textViewTiempo.setText(entrenamiento.getTiempoFormateado());
         textViewDistancia.setText(entrenamiento.getDistanciaMts() + " mts.");
 
-        // Pulsación rápida sobre el entrenamioento, se muestran sus datos en un dialog
         linearLayoutItemEntrenamiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

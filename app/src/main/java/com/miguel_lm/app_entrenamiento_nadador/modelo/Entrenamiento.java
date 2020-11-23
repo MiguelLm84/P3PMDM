@@ -29,7 +29,6 @@ public class Entrenamiento {
     @NonNull
     private int distanciaMts;
 
-    // Campos calculados, no se guardan en la bd
     @Ignore
     private float tiempoEnMinutos;
     @Ignore
@@ -38,12 +37,12 @@ public class Entrenamiento {
     private float minutosPorKm;
     @Ignore
     private float segundosPorKm;
-
     @Ignore
     private ArrayList<Integer> listaDistancia=new ArrayList<>();
-
     @Ignore
     private ArrayList<Float> listaTiempoEnMin=new ArrayList<>();
+    @Ignore
+    private  int contador = distanciaMts;
 
     public Entrenamiento(Date fecha, int horas, int minutos, int segundos, int distanciaMts) {  //int hora, int minutos, int segundos
 
@@ -53,7 +52,6 @@ public class Entrenamiento {
         this.segundos=segundos;
         this.distanciaMts = distanciaMts;
 
-        listaDistancia.add(distanciaMts);
         recalcularTiempos();
     }
 
@@ -74,6 +72,8 @@ public class Entrenamiento {
         listaTiempoEnMin.add(tiempoEnMinutos);
         tiempoEnSegundos = segundos * minutos*60 * horas*3600;
         minutosPorKm = minutosPorKm();
+        contador =contador+distanciaMts;
+        listaDistancia.add(contador);
         segundosPorKm = segundosPorKm();
     }
 
@@ -141,29 +141,29 @@ public class Entrenamiento {
 
     public String getMinutosPorKm() {
 
-        DecimalFormat formateoDecimal1 = new DecimalFormat(",00");
-        String minPorKm = formateoDecimal1.format(minutosPorKm())+" min.";
+        DecimalFormat formateoDecimal3 = new DecimalFormat("#.00");
+        String minPorKm = formateoDecimal3.format(minutosPorKm())+" min.";
 
         return minPorKm;
     }
 
     public String getSegundosPorKm() {
 
-        DecimalFormat formateoDecimal3 = new DecimalFormat("#.00");
-        String segPorKm = formateoDecimal3.format(segundosPorKm())+" seg.";
+        DecimalFormat formateoDecimal2 = new DecimalFormat("#0.00");
+        String segPorKm = formateoDecimal2.format(segundosPorKm())+" seg.";
 
         return segPorKm;
     }
 
     public String getkmNadadosTotal(){  //todo: recoger en la lista todos los entrenamientos de creados para hacer el cálculo.
 
-        int distanciaTotal=0;
+        /*int distanciaTotal=0;
 
         for(int i=0;i<listaDistancia.size();i++){
             int distancia=listaDistancia.get(i);
             distanciaTotal=distanciaTotal+distancia;
-        }
-        float distanciaEnKm=(float)distanciaTotal/1000;
+        }*/
+        float distanciaEnKm=(float)contador/1000;
         String distanciaEnKmParseada=distanciaEnKm+" Km";
 
         return distanciaEnKmParseada;
@@ -171,7 +171,7 @@ public class Entrenamiento {
 
     public String getMediaMinPorKm(){
 
-        DecimalFormat formateoDecimal3 = new DecimalFormat("#.00");
+        DecimalFormat formateoDecimal2 = new DecimalFormat("#0.00");
         String resultado=null;
         int distanciaTotal=0;
         float tiempoTotal=0;
@@ -186,7 +186,7 @@ public class Entrenamiento {
             distanciaTotal=distanciaTotal+distancia;
         }
         float calculo=(float)distanciaTotal/tiempoTotal;
-        resultado=formateoDecimal3.format(calculo)+" m/km";
+        resultado=formateoDecimal2.format(calculo)+" min/km";
 
         return resultado;
     }
@@ -206,23 +206,33 @@ public class Entrenamiento {
         return (1000*tiempoEnSegundos/distanciaMts);
     }
 
-    public float velocidadMediaEntreno(){
+    public float velocidadMediaGeneral(){
 
         //todo: Hacer método velocidadMedia() para cada entreno.
 
-        float kms=distanciaMts/(float)1000;
-        float minTotales=(segundos/(float)60)+minutos;
-        float tiempoTotalHoras=(minTotales/(float)60)+horas;
+        int contadorMetros = 0;
+        float tiempoMin = 0;
+        for(int i=0;i<listaDistancia.size();i++){
+            int metros = listaDistancia.get(i);
+            contadorMetros = contadorMetros+metros;
+        }
+        for(int i=0;i<listaTiempoEnMin.size();i++){
+            float t = listaTiempoEnMin.get(i);
+            tiempoMin = tiempoMin+t;
+        }
+        float kms=contadorMetros/(float)1000;
+        //float minTotales=(segundos/(float)60)+minutos;
+        float tiempoTotalHoras=(tiempoMin/(float)60)+horas;
         float velKmH=kms/tiempoTotalHoras;
 
 
         return velKmH;
     }
 
-    public String toStringVelMedEntreno(){
+    public String toStringVelMedGeneral(){
 
         DecimalFormat formateoDecimal2 = new DecimalFormat("#0.00");
-        String velMedEntreno=formateoDecimal2.format(velocidadMediaEntreno())+" km/h";
+        String velMedEntreno=formateoDecimal2.format(velocidadMediaGeneral())+" km/h";
 
         return velMedEntreno;
     }

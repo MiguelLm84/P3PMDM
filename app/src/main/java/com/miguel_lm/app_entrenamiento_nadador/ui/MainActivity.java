@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
-import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
@@ -21,19 +20,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
-
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -41,6 +36,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SeleccionarEntreno {
 
+    private Entrenamiento entrenamientoAmodificar;
     private AdapterEntrenamientos adapterEntrenamientos;
 
     private EditText edNombre;
@@ -50,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     private EditText edAltura;
     private EditText edPeso;
 
-    // Constantes para las claves de las preferencias y evitar errores
     private static final String PREF_FICHERO = "preferencias";
     private static final String PREF_NOMBRE = "Nombre";
     private static final String PREF_APELLIDO1 = "Primer Apellido";
@@ -65,13 +60,11 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Configurar listado
         RecyclerView recyclerViewEntrenamientos = findViewById(R.id.recyclerViewEntrenamientos);
         recyclerViewEntrenamientos.setLayoutManager(new LinearLayoutManager(this));
         adapterEntrenamientos = new AdapterEntrenamientos(this, this);
         recyclerViewEntrenamientos.setAdapter(adapterEntrenamientos);
 
-        // Recoger los controles
         edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
         edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
         edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
@@ -87,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         super.onResume();
 
         leerDatosDesdePreferencias();
-
+        espacioDisponibleEnMemoriaInterna();
         generarFichero();
     }
 
@@ -162,32 +155,23 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
     private void generarFichero() {
 
-        isExternalStorageReadable();
-        String ruta = "infoEstadisticas.txt";
-        File infoEstadisticas = new File(Environment.getExternalStorageDirectory(), "Estadísticas");
-
-        if(!infoEstadisticas.exists()){
-            try {
-                infoEstadisticas.createNewFile();
-
-            } catch (IOException e) {
-                Toast.makeText(this,"Error al crear el archivo "+infoEstadisticas,Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
+        String nombreDirectorio = "Estadisticas";
+        String nombreFichero = "infoEstadisticas.txt";
+        File directorio = new File(MainActivity.this.getFilesDir(), nombreDirectorio);
+        if (!directorio.exists()) {
+            directorio.mkdir();
         }
-
         try {
-            File archivoTxt = new File(infoEstadisticas, ruta);
-            FileWriter fw = new FileWriter(archivoTxt);
-            fw.write(listarEntrenamientos());
-            fw.close();
-
-        } catch (IOException e) {
-            Toast.makeText(this,"Error al intentar escribir en el archivo "+infoEstadisticas,Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            File fichero = new File(directorio, nombreFichero);
+            FileWriter writer = new FileWriter(fichero);
+            writer.append(listarEstadisticasGenerales());
+            writer.flush();
+            writer.close();
+            Toast.makeText(MainActivity.this, "Fichero guardado con éxito", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(this,"Error al intentar escribir en el archivo " + nombreFichero,Toast.LENGTH_SHORT).show();
         }
 
-        Toast.makeText(this,"Espacio disponible en Memoria Interna: "+espacioDisponibleMemInterna(),Toast.LENGTH_LONG).show();
     }
 
     public void accionCrearEntrenamiento(View view) {
@@ -335,7 +319,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
                     RepositorioEntrenamientos.getInstance(MainActivity.this).actualizarEntrenamiento(entrenamientoAModificar);
                 }
-                // Actualizar el adapter, recargará los datos desde la bd
                 adapterEntrenamientos.actualizarListado();
                 Toast.makeText(MainActivity.this, entrenamientoAModificar == null ? "Entrenamiento creado" : "Entrenamiento modificado", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
@@ -388,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
     private void accionModificar() {
 
-        List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
+        final List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setIcon(R.drawable.ic_pencil);
@@ -398,35 +381,26 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         final boolean[] entrenamientosSeleccionados = new boolean[listaEntrenamientos.size()];
         for (int i = 0; i < listaEntrenamientos.size(); i++)
             arrayEntrenamientos[i] = listaEntrenamientos.get(i).getFechaFormateada() + ", " + listaEntrenamientos.get(i).getTiempoFormateado();
-        builder.setMultiChoiceItems(arrayEntrenamientos, entrenamientosSeleccionados, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setSingleChoiceItems(arrayEntrenamientos, -1, new DialogInterface.OnClickListener() {
+
             @Override
-            public void onClick(DialogInterface dialog, int i, boolean isChecked) {
-                entrenamientosSeleccionados[i] = isChecked;
+            public void onClick(DialogInterface dialog, int posicionElementoSeleccionado) {
+                entrenamientoAmodificar = listaEntrenamientos.get(posicionElementoSeleccionado);
             }
         });
-
         builder.setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(final DialogInterface dialog, final int i) {
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-                builder1.setIcon(R.drawable.ic_pencil);
-                builder1.setTitle("Modificar");
-                builder1.setMessage("\nOpción fuera de servicio");
-                builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Toast.makeText(MainActivity.this, "El entrenamiento no se ha podido modificar", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder1.setNegativeButton("Cancelar", null);
-                builder1.create().show();
+                if (entrenamientoAmodificar == null) {
+                    Toast.makeText(MainActivity.this, "Debe escoger una tarea", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    accionCrearModificarEntrenamiento(entrenamientoAmodificar);
+                }
             }
         });
-
         builder.setNegativeButton("Cancelar", null);
         builder.create().show();
     }
@@ -437,7 +411,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         AlertDialog.Builder builderElimina = new AlertDialog.Builder(MainActivity.this);
         builderElimina.setIcon(R.drawable.ic_remove_symbol);
-        builderElimina.setTitle("Eliminar elementos");
+        builderElimina.setTitle("Eliminar");
 
         String[] arrayEntrenamientos = new String[listaEntrenamientos.size()];
         final boolean[] entrenamientosSeleccionados = new boolean[listaEntrenamientos.size()];
@@ -476,7 +450,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                             }
                         }
                         MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
-                        // Actualizar el adapter, recargará los datos desde la bd
                         adapterEntrenamientos.actualizarListado();
                     }
                 });
@@ -504,7 +477,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                 RepositorioEntrenamientos.getInstance(MainActivity.this).eliminarEntrenamiento(entrenamiento);
                 listaEntrenamientos.remove(entrenamiento);
 
-                // Actualizar el adapter, recargará los datos desde la bd
                 adapterEntrenamientos.actualizarListado();
                 MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
             }
@@ -533,7 +505,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         tvKmNadados.setText(entrenamiento.getkmNadadosTotal());
         tvMediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
-        tvVelMed.setText(entrenamiento.toStringVelocidadMedia());
+        tvVelMed.setText(entrenamiento.toStringVelMedGeneral());
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -564,7 +536,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         infoTiempo.setText(entrenamiento.getTiempoFormateado()+" h.");
         infoDistancia.setText(entrenamiento.getDistanciaMts()+" m.");
         infoMinPorKm.setText(entrenamiento.getMinutosPorKm());
-        infoVelMed.setText(entrenamiento.toStringVelMedEntreno());
+        infoVelMed.setText(entrenamiento.toStringVelocidadMedia());
 
         bt_Aceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -576,7 +548,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         dialog.show();
     }
 
-    public String espacioDisponibleMemInterna(){
+    public String espacioDisponibleEnMemoriaInterna(){
 
         String espacioDisponible = null;
         File internalStorageFile=getFilesDir();
@@ -586,13 +558,13 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         return espacioDisponible;
     }
 
-    public String listarEntrenamientos(){
+    public String listarEstadisticasGenerales(){
 
         String entrenos = null;
         List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
         for(int i=0;i<listaEntrenamientos.size();i++){
-            entrenos = "\n·FECHA: "+listaEntrenamientos.get(i).getFechaFormateada()+"\n·TIEMPO: "+listaEntrenamientos.get(i).getFechaFormateada()+
-                    "\n·DISTANCIA: "+listaEntrenamientos.get(i).getDistanciaMts()+"\n\n";
+            entrenos = "\nESTADÍSTICAS GENERALES\n\n·DISTANCIA TOTAL (KM): "+listaEntrenamientos.get(i).getkmNadadosTotal()+"\n·MEDIA MIN/KM: "+listaEntrenamientos.get(i).getMediaMinPorKm()+
+                    "\n·VELOCIDAD MEDIA (KM/H): "+listaEntrenamientos.get(i).toStringVelocidadMedia()+"\n\n";
         }
         return entrenos;
     }
