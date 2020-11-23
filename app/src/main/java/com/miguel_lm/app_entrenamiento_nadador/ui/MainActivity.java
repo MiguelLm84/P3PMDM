@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         edEdad.setText(edad);
 
         String altura = preferencias.getString(PREF_ALTURA, "");
-        edPeso.setText(altura);
+        edAltura.setText(altura);
 
         String peso = preferencias.getString(PREF_PESO, "");
         edPeso.setText(peso);
@@ -179,9 +179,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         accionCrearModificarEntrenamiento(null);
     }
     private void accionCrearModificarEntrenamiento ( final Entrenamiento entrenamientoAModificar){
-
-        //todo: ajustar para que al pulsar la opción modificar salte al layout de modificar y no al de nuevo entrenamiento.
-
+        
         final Calendar cal = Calendar.getInstance();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -357,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         tvMinPorKm.setText(mostrarInfoEstadisticas.getkmNadadosTotal());
         tv_mediaMinPorKm.setText(mostrarInfoEstadisticas.getMediaMinPorKm());
-        tv_velocidadMed.setText(mostrarInfoEstadisticas.toStringVelocidadMedia());
+        tv_velocidadMed.setText(mostrarInfoEstadisticas.toStringVelMedGeneral());
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -505,7 +503,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         tvKmNadados.setText(entrenamiento.getkmNadadosTotal());
         tvMediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
-        tvVelMed.setText(entrenamiento.toStringVelMedGeneral());
+        tvVelMed.setText(entrenamiento.toStringVelocidadMedia());
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -564,7 +562,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
         for(int i=0;i<listaEntrenamientos.size();i++){
             entrenos = "\nESTADÍSTICAS GENERALES\n\n·DISTANCIA TOTAL (KM): "+listaEntrenamientos.get(i).getkmNadadosTotal()+"\n·MEDIA MIN/KM: "+listaEntrenamientos.get(i).getMediaMinPorKm()+
-                    "\n·VELOCIDAD MEDIA (KM/H): "+listaEntrenamientos.get(i).toStringVelocidadMedia()+"\n\n";
+                    "\n·VELOCIDAD MEDIA (KM/H): "+listaEntrenamientos.get(i).toStringVelMedGeneral()+"\n\n";
         }
         return entrenos;
     }

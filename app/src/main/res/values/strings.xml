@@ -4,7 +4,7 @@
     <string name="verEstadisticas">Ver Estadísticas</string>
     <string name="modificarEntreno">Modificar</string>
     <string name="eliminarEntreno">Eliminar</string>
-    <string name="entreno_nuevo">Entrenamiento Nuevo</string>
+    <string name="entreno_nuevo">Entrenamiento</string>
     <string name="fechaEntreno">Fecha</string>
     <string name="fechaHint">Fecha</string>
     <string name="tiempoEntreno">Tiempo</string>
