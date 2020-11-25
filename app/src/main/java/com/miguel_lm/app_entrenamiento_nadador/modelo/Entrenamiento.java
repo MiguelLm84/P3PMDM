@@ -155,7 +155,7 @@ public class Entrenamiento {
         return segPorKm;
     }
 
-    public String getkmNadadosTotal(){  //todo: recoger en la lista todos los entrenamientos creados para hacer el cálculo.
+    public String getkmNadadosTotal(){  //todo: Arreglar las estadísticas generales para haga bien el cálculo.
 
         int disTotal=0;
 

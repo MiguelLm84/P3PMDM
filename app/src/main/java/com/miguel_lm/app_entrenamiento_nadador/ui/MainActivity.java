@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         accionCrearModificarEntrenamiento(null);
     }
     private void accionCrearModificarEntrenamiento ( final Entrenamiento entrenamientoAModificar){
-        
+
         final Calendar cal = Calendar.getInstance();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -261,21 +261,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                     Toast.makeText(MainActivity.this, "No se permiten todos los valores a 0", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                /*if (horasInt == 0) {
-                    Toast.makeText(MainActivity.this, "No se permite horas a 0", Toast.LENGTH_SHORT).show();
-                        return;
-                }     //todo: permitir horas a 0 o no?,si se entrena menos de una hora?
-
-                if (minutosInt == 0) {
-                    Toast.makeText(MainActivity.this, "No se permite minutos a 0", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (segundosInt == 0) {
-                    Toast.makeText(MainActivity.this, "No se permite segundos a 0", Toast.LENGTH_SHORT).show();
-                    return;
-                }*/
 
                 if(horasInt > 24){
 
