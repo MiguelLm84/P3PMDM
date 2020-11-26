@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StatFs;
 import android.text.InputType;
 import android.text.format.Formatter;
@@ -20,13 +19,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
+import com.miguel_lm.app_entrenamiento_nadador.modelo.Estadisticas;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
@@ -268,13 +271,13 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                     return;
                 }
 
-                if(minutosInt > 60){
+                if(minutosInt > 59){
 
                     Toast.makeText(MainActivity.this, "No se permite minutos mayores de 60.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(segundosInt > 60){
+                if(segundosInt > 59){
 
                     Toast.makeText(MainActivity.this, "No se permite segundos mayores de 60.", Toast.LENGTH_SHORT).show();
                     return;
@@ -322,10 +325,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
-        Entrenamiento mostrarInfoEstadisticas = null;
-        for (int i=0;i<listaEntrenamientos.size();i++) {
-            mostrarInfoEstadisticas = listaEntrenamientos.get(i);
-        }
+        Estadisticas estadisticas = new Estadisticas(listaEntrenamientos);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.ic_list);
@@ -333,14 +333,14 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         builder.setView(dialogLayout);
         final  AlertDialog dialog = builder.create();
 
-        TextView tvMinPorKm=dialogLayout.findViewById(R.id.tv_KmNadados);
+        TextView tv_Km=dialogLayout.findViewById(R.id.tv_KmNadados);
         TextView tv_mediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
         TextView tv_velocidadMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
         Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
-        tvMinPorKm.setText(mostrarInfoEstadisticas.getkmNadadosTotal());
-        tv_mediaMinPorKm.setText(mostrarInfoEstadisticas.getMediaMinPorKm());
-        tv_velocidadMed.setText(mostrarInfoEstadisticas.toStringVelMedGeneral());
+        tv_Km.setText(estadisticas.getDistanciaTotalKms());
+        tv_mediaMinPorKm.setText(estadisticas.getMediaPorMinutosKm());
+        tv_velocidadMed.setText(estadisticas.getVelocidadMediaKmH());
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {
 
@@ -486,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         TextView tvVelMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
         Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
 
-        tvKmNadados.setText(entrenamiento.getkmNadadosTotal());
+        tvKmNadados.setText(entrenamiento.getkmNadados());
         tvMediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
         tvVelMed.setText(entrenamiento.toStringVelocidadMedia());
 
@@ -541,30 +541,15 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         return espacioDisponible;
     }
 
-    public String listarEstadisticasGenerales(){
+    public String listarEstadisticasGenerales() {
 
-        String entrenos = null;
         List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
-        for(int i=0;i<listaEntrenamientos.size();i++){
-            entrenos = "\nESTADÍSTICAS GENERALES\n\n·DISTANCIA TOTAL (KM): "+listaEntrenamientos.get(i).getkmNadadosTotal()+"\n·MEDIA MIN/KM: "+listaEntrenamientos.get(i).getMediaMinPorKm()+
-                    "\n·VELOCIDAD MEDIA (KM/H): "+listaEntrenamientos.get(i).toStringVelMedGeneral()+"\n\n";
-        }
-        return entrenos;
+        Estadisticas estadisticas = new Estadisticas(listaEntrenamientos);
+
+        return "\nESTADÍSTICAS GENERALES\n\n·DISTANCIA TOTAL (KM): " + estadisticas.getDistanciaTotalKms() +
+                "\n·MEDIA MIN/KM: " + estadisticas.getMediaPorMinutosKm() +
+                "\n·VELOCIDAD MEDIA (KM/H): " + estadisticas.getVelocidadMediaKmH() + "\n\n";
+
     }
 
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
-    }
 }
