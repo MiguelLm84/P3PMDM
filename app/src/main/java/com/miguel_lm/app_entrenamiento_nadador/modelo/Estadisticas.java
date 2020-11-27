@@ -11,7 +11,6 @@ public class Estadisticas {
 
     private final DecimalFormat formateoDecimal = new DecimalFormat("#0.00");
 
-    /** Recibe todos los entrenamientos y realiza los cálculos */
     public Estadisticas(List<Entrenamiento> listadoEntrenamientos) {
 
         distanciaTotalKms = 0;
