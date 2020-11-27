@@ -127,7 +127,7 @@
         android:paddingEnd="0dp">
 
         <Button
-            android:id="@+id/btn_Aceptar"
+            android:id="@+id/btn_Eliminar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

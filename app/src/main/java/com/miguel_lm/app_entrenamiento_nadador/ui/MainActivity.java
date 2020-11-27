@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         final EditText editTextMinutos = dialogLayout.findViewById(R.id.edTxtMinutos);
         final EditText editTextSegundos = dialogLayout.findViewById(R.id.edTxtSegundos);
         final EditText editTextDistancia = dialogLayout.findViewById(R.id.edTxtDistancia);
-        final Button buttonAceptar = dialogLayout.findViewById(R.id.btn_Aceptar);
+        final Button buttonAceptar = dialogLayout.findViewById(R.id.btn_Eliminar);
         final Button buttonCancelar = dialogLayout.findViewById(R.id.btn_Cancel);
         textViewFecha.setInputType(InputType.TYPE_NULL);
 
@@ -336,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         TextView tv_Km=dialogLayout.findViewById(R.id.tv_KmNadados);
         TextView tv_mediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
         TextView tv_velocidadMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
-        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
+        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Eliminar);
 
         tv_Km.setText(estadisticas.getDistanciaTotalKms());
         tv_mediaMinPorKm.setText(estadisticas.getMediaPorMinutosKm());
@@ -446,13 +447,59 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     @Override
     public void eliminarEntrenamiento(final Entrenamiento entrenamiento) {
 
+        /*View view = getCurrentFocus();
+        if(view!=null){
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }*/
+
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setIcon(R.drawable.ic_remove_symbol);
+        final View dialogLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_eliminar, null);
+        builder.setView(dialogLayout);
+        final AlertDialog dialog = builder.create();
+
+        final TextView tvFecha = dialogLayout.findViewById(R.id.textViewFecha2);
+        final EditText etHoras = dialogLayout.findViewById(R.id.edTxtHoras);
+        final EditText etMinutos = dialogLayout.findViewById(R.id.edTxtMinutos);
+        final EditText etSegundos = dialogLayout.findViewById(R.id.edTxtSegundos);
+        final EditText etDistancia = dialogLayout.findViewById(R.id.edTxtDistancia2);
+        final Button btnAceptar = dialogLayout.findViewById(R.id.btn_Eliminar);
+        final Button btnCancelar = dialogLayout.findViewById(R.id.btn_Cancel);
+        //tvFecha.setInputType(InputType.TYPE_NULL);
+
+        tvFecha.setText(entrenamiento.getFechaFormateada());
+        etHoras.setText(String.valueOf(entrenamiento.getHoras()));
+        etMinutos.setText(String.valueOf(entrenamiento.getMinutos()));
+        etSegundos.setText(String.valueOf(entrenamiento.getSegundos()));
+        etDistancia.setText(String.valueOf(entrenamiento.getDistanciaMts()));
+
+
+        /*builder.setIcon(R.drawable.ic_remove_symbol);
         builder.setTitle("Eliminar elemento");
-        builder.setMessage("\n¿Está seguro de querer eliminar esto?\n\n"+entrenamiento.toStringEntreno());
-        builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+        builder.setMessage("\n¿Está seguro de querer eliminar esto?\n\n"+entrenamiento.toStringEntreno());*/
+        //builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
 
             List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(MainActivity.this).obtenerEntrenamientos();
+
+            @Override
+            public void onClick(View v) {
+                RepositorioEntrenamientos.getInstance(MainActivity.this).eliminarEntrenamiento(entrenamiento);
+                listaEntrenamientos.remove(entrenamiento);
+
+                adapterEntrenamientos.actualizarListado();
+                MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+            /*List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(MainActivity.this).obtenerEntrenamientos();
 
             @Override
             public void onClick(final DialogInterface dialog, int which) {
@@ -465,7 +512,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             }
         });
         builder.setNegativeButton("Cancelar", null);
-        builder.create().show();
+        builder.create().show();*/
     }
 
     @Override
@@ -484,7 +531,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         TextView tvKmNadados=dialogLayout.findViewById(R.id.tv_KmNadados);
         TextView tvMediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
         TextView tvVelMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
-        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
+        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Eliminar);
 
         tvKmNadados.setText(entrenamiento.getkmNadados());
         tvMediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
@@ -513,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         TextView infoDistancia=dialogLayout.findViewById(R.id.tv_distancia_info_entreno);
         TextView infoMinPorKm=dialogLayout.findViewById(R.id.tv_minPorKm_Info);
         TextView infoVelMed=dialogLayout.findViewById(R.id.tv_velMed_info_entrno);
-        Button bt_Aceptar=dialogLayout.findViewById(R.id.btn_Aceptar);
+        Button bt_Aceptar=dialogLayout.findViewById(R.id.btn_Eliminar);
 
         infoFecha.setText(entrenamiento.getFechaFormateada());
         infoTiempo.setText(entrenamiento.getTiempoFormateado()+" h.");
