@@ -22,7 +22,7 @@
         android:foregroundTint="#2196F3"
         android:inputType="none"
         android:shadowColor="#FFFFFF"
-        android:text="@string/entreno_nuevo"
+        android:text="@string/eliminarEntreno"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
