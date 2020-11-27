@@ -435,6 +435,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                         }
                         MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
                         adapterEntrenamientos.actualizarListado();
+                        Toast.makeText(MainActivity.this, "Entrenamiento eliminado", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builderEliminar_Confirmar.create().show();
@@ -446,12 +447,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
     @Override
     public void eliminarEntrenamiento(final Entrenamiento entrenamiento) {
-
-        /*View view = getCurrentFocus();
-        if(view!=null){
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
-        }*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         final View dialogLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_eliminar, null);
@@ -465,7 +460,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         final EditText etDistancia = dialogLayout.findViewById(R.id.edTxtDistancia2);
         final Button btnAceptar = dialogLayout.findViewById(R.id.btn_Eliminar);
         final Button btnCancelar = dialogLayout.findViewById(R.id.btn_Cancel);
-        //tvFecha.setInputType(InputType.TYPE_NULL);
 
         tvFecha.setText(entrenamiento.getFechaFormateada());
         etHoras.setText(String.valueOf(entrenamiento.getHoras()));
@@ -473,11 +467,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         etSegundos.setText(String.valueOf(entrenamiento.getSegundos()));
         etDistancia.setText(String.valueOf(entrenamiento.getDistanciaMts()));
 
-
-        /*builder.setIcon(R.drawable.ic_remove_symbol);
-        builder.setTitle("Eliminar elemento");
-        builder.setMessage("\n¿Está seguro de querer eliminar esto?\n\n"+entrenamiento.toStringEntreno());*/
-        //builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
 
             List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(MainActivity.this).obtenerEntrenamientos();
@@ -489,6 +478,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
                 adapterEntrenamientos.actualizarListado();
                 MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this, "Entrenamiento eliminado", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -499,20 +489,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             }
         });
         dialog.show();
-            /*List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(MainActivity.this).obtenerEntrenamientos();
-
-            @Override
-            public void onClick(final DialogInterface dialog, int which) {
-
-                RepositorioEntrenamientos.getInstance(MainActivity.this).eliminarEntrenamiento(entrenamiento);
-                listaEntrenamientos.remove(entrenamiento);
-
-                adapterEntrenamientos.actualizarListado();
-                MainActivity.this.adapterEntrenamientos.notifyDataSetChanged();
-            }
-        });
-        builder.setNegativeButton("Cancelar", null);
-        builder.create().show();*/
     }
 
     @Override
