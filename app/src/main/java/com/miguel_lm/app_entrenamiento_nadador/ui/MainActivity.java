@@ -14,23 +14,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Estadisticas;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.RepositorioEntrenamientos;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
