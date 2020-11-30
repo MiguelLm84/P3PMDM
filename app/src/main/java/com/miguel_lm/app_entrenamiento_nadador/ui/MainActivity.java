@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             writer.append(listarEstadisticasGenerales());
             writer.flush();
             writer.close();
-            Toast.makeText(MainActivity.this, "Fichero guardado con éxito", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(this,"Error al intentar escribir en el archivo " + nombreFichero,Toast.LENGTH_SHORT).show();
         }
