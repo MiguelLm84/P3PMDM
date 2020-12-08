@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StatFs;
@@ -179,7 +180,10 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     }
     private void accionCrearModificarEntrenamiento ( final Entrenamiento entrenamientoAModificar){
 
-        final Calendar cal = Calendar.getInstance();
+        Intent intent = new Intent(this, Activity_Add_Entrenamiento.class);
+        startActivity(intent);
+
+        /*final Calendar cal = Calendar.getInstance();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View dialogLayout = LayoutInflater.from(this).inflate(R.layout.dialog_entreno, null);
@@ -314,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
             }
         });
 
-        dialog.show();
+        dialog.show();*/
     }
 
     private void accionVerEstadisticas() {
