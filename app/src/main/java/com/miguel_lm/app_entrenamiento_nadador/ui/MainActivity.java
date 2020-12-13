@@ -35,8 +35,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.miguel_lm.app_entrenamiento_nadador.ui.Activity_Add_Entrenamiento.CLAVE_ENTRENAMIENTO;
+
 public class MainActivity extends AppCompatActivity implements SeleccionarEntreno {
 
+    private long tiempoParaSalir = 0;
     private Entrenamiento entrenamientoAmodificar;
     private AdapterEntrenamientos adapterEntrenamientos;
 
@@ -181,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     private void accionCrearModificarEntrenamiento ( final Entrenamiento entrenamientoAModificar){
 
         Intent intent = new Intent(this, Activity_Add_Entrenamiento.class);
+        intent.putExtra(CLAVE_ENTRENAMIENTO, entrenamientoAModificar);
         startActivity(intent);
 
         /*final Calendar cal = Calendar.getInstance();
@@ -323,7 +327,11 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
     private void accionVerEstadisticas() {
 
-        List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
+        Intent intent = new Intent(this, Activity_Ver_Estadisticas.class);
+        startActivity(intent);
+
+
+       /* List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         Estadisticas estadisticas = new Estadisticas(listaEntrenamientos);
 
@@ -349,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                 dialog.dismiss();
             }
         });
-        dialog.show();
+        dialog.show();*/
     }
 
     private void accionModificar() {
@@ -498,7 +506,12 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     @Override
     public void estadisticasEntrenamiento(Entrenamiento entrenamiento) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Intent intent = new Intent(this, Activity_Ver_Estadisticas.class);
+        intent.putExtra(CLAVE_ENTRENAMIENTO, entrenamiento);
+        startActivity(intent);
+
+
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View dialogLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_estadisticas, null);
         builder.setView(dialogLayout);
         final AlertDialog dialog = builder.create();
@@ -519,13 +532,17 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                 dialog.dismiss();
             }
         });
-        dialog.show();
+        dialog.show();*/
     }
 
     @Override
     public void entrenamientoPulsado(Entrenamiento entrenamiento) {
 
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        Intent intent = new Intent(this, Activity_Info_Entrenamiento.class);
+        intent.putExtra(CLAVE_ENTRENAMIENTO, entrenamiento);
+        startActivity(intent);
+
+        /*android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         final View dialogLayout = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_info_entreno, null);
         builder.setView(dialogLayout);
         final AlertDialog dialog = builder.create();
@@ -550,7 +567,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                 dialog.dismiss();
             }
         });
-        dialog.show();
+        dialog.show();*/
     }
 
     public String espacioDisponibleEnMemoriaInterna(){
@@ -573,5 +590,16 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
                 "\n·VELOCIDAD MEDIA (KM/H): " + estadisticas.getVelocidadMediaKmH() + "\n\n";
 
     }
+    @Override
+    public void onBackPressed(){
 
+        long tiempo = System.currentTimeMillis();
+        if (tiempo - tiempoParaSalir > 3000) {
+            tiempoParaSalir = tiempo;
+            Toast.makeText(this, "Presione de nuevo 'Atrás' si desea salir",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

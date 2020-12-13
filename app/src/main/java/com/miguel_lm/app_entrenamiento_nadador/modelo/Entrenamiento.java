@@ -5,16 +5,14 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.miguel_lm.app_entrenamiento_nadador.ui.MainActivity;
-
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 @Entity(tableName = "Entrenamientos")
-public class Entrenamiento {
+public class Entrenamiento implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     protected int key;

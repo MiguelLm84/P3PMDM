@@ -26,18 +26,24 @@ import java.util.Locale;
 public class Activity_Add_Entrenamiento extends AppCompatActivity {
 
     private AdapterEntrenamientos adapterEntrenamientos;
+    private Entrenamiento entrenamientoAModificar;
+    public static final String CLAVE_ENTRENAMIENTO = "1234";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__add__entrenamiento);
+
+        entrenamientoAModificar = (Entrenamiento) getIntent().getSerializableExtra(CLAVE_ENTRENAMIENTO);
+
+        addEntrenamiento(entrenamientoAModificar);
     }
 
     public void addEntrenamiento(final Entrenamiento entrenamientoAModificar){
 
         final Calendar cal = Calendar.getInstance();
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        /*final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View dialogLayout = LayoutInflater.from(this).inflate(R.layout.dialog_entreno, null);
         builder.setView(dialogLayout);
         final AlertDialog dialog = builder.create();
@@ -49,7 +55,16 @@ public class Activity_Add_Entrenamiento extends AppCompatActivity {
         final EditText editTextDistancia = dialogLayout.findViewById(R.id.edTxtDistancia);
         final Button buttonAceptar = dialogLayout.findViewById(R.id.btn_Eliminar);
         final Button buttonCancelar = dialogLayout.findViewById(R.id.btn_Cancel);
-        textViewFecha.setInputType(InputType.TYPE_NULL);
+        textViewFecha.setInputType(InputType.TYPE_NULL);*/
+
+        final TextView textViewFecha = findViewById(R.id.textViewFecha);
+        final EditText editTextHoras = findViewById(R.id.edTxtHoras);
+        final EditText editTextMinutos = findViewById(R.id.edTxtMinutos);
+        final EditText editTextSegundos = findViewById(R.id.edTxtSegundos);
+        final EditText editTextDistancia = findViewById(R.id.edTxtDistancia);
+        final Button buttonAceptar = findViewById(R.id.btn_Eliminar);
+        final Button buttonCancelar = findViewById(R.id.btn_Cancel);
+        //textViewFecha.setInputType(InputType.TYPE_NULL);
 
         if (entrenamientoAModificar != null) {
             editTextHoras.setText(String.valueOf(entrenamientoAModificar.getHoras()));
@@ -159,17 +174,17 @@ public class Activity_Add_Entrenamiento extends AppCompatActivity {
                 }
                 adapterEntrenamientos.actualizarListado();
                 Toast.makeText(Activity_Add_Entrenamiento.this, entrenamientoAModificar == null ? "Entrenamiento creado" : "Entrenamiento modificado", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+                //dialog.dismiss();
             }
         });
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                //dialog.dismiss();
             }
         });
 
-        dialog.show();
+        //dialog.show();
     }
 }
