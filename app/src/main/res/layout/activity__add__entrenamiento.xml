@@ -9,19 +9,21 @@
     tools:context=".ui.Activity_Add_Entrenamiento">
 
     <TextView
-        android:id="@+id/titulo_entreno4"
+        android:id="@+id/titulo_entreno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="80dp"
         android:autofillHints=""
         android:background="#020202"
         android:ems="10"
         android:fontFamily="sans-serif-black"
         android:foregroundTint="#2196F3"
         android:inputType="none"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:shadowColor="#FFFFFF"
         android:text="@string/entreno_nuevo"
         android:textAlignment="center"
@@ -31,12 +33,12 @@
         tools:ignore="TextViewEdits" />
 
     <TextView
-        android:id="@+id/tv_KmNadadosTotalTitulo4"
+        android:id="@+id/tv_KmNadadosTotalTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/fechaEntreno"
         android:textColor="#020202"
@@ -44,12 +46,12 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textViewFecha4"
+        android:id="@+id/textViewFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="20dp"
         android:autofillHints=""
         android:fontFamily="@font/amaranth"
         android:hint="@string/fecha_dialog"
@@ -61,12 +63,12 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_mediaMinPorKmTitulo4"
+        android:id="@+id/tv_mediaMinPorKmTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/tiempoEntreno"
         android:textColor="#020202"
@@ -76,9 +78,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <EditText
@@ -122,12 +124,12 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tV_Distancia4"
+        android:id="@+id/tV_Distancia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/distancia_mtsEntreno"
         android:textColor="#020202"
@@ -135,12 +137,12 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/edTxtDistancia4"
+        android:id="@+id/edTxtDistancia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="60dp"
         android:autofillHints=""
         android:fontFamily="@font/amaranth"
         android:hint="@string/distanciaHint"
@@ -152,9 +154,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal">
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:orientation="horizontal"
+        android:paddingStart="30sp"
+        android:paddingEnd="30sp">
 
         <Button
             android:id="@+id/btn_Cancel"
@@ -166,11 +170,11 @@
             android:onClick="onClickButtonCancelar"
             android:text="@string/cancelarEntreno"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            tools:ignore="OnClick" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Space
-            android:layout_width="30dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent" />
 
         <Button
@@ -183,8 +187,7 @@
             android:onClick="onClickButtonAceptar"
             android:text="@string/ingresarEntreno"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            tools:ignore="OnClick" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>

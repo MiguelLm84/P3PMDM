@@ -18,4 +18,8 @@
         android:id="@+id/accionEliminar"
         android:icon="@android:drawable/ic_dialog_info"
         android:title="@string/eliminarEntreno" />
+    <item
+        android:id="@+id/accionDatosPersonales"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="@string/modificar_datos_personales" />
 </menu>

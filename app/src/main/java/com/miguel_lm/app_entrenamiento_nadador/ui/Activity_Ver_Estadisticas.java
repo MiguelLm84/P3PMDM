@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miguel_lm.app_entrenamiento_nadador.R;
 import com.miguel_lm.app_entrenamiento_nadador.modelo.Entrenamiento;
@@ -20,75 +21,89 @@ public class Activity_Ver_Estadisticas extends AppCompatActivity {
 
     private Entrenamiento entrenamiento;
     public static final String CLAVE_ENTRENAMIENTO = "1234";
+    private long tiempoParaSalir = 0;
+
+    TextView tituloInfoFecha;
+    TextView tituloInfoTiempo;
+    private TextView infoFecha;
+    private TextView infoTiempo;
+    private TextView tv_Km;
+    private TextView tv_mediaMinPorKm;
+    private TextView tv_velocidadMed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__ver__estadisticas);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_piscina);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+        tituloInfoFecha = findViewById(R.id.tv_fecha_titulo_infoEstadisticas);
+        tituloInfoTiempo = findViewById(R.id.tv_tiempo_titulo_infoEstadisticas);
+        infoFecha = findViewById(R.id.tv_fecha_info_entrenoEstadisticas);
+        infoTiempo = findViewById(R.id.tv_tiempo_info_entrenoEstadisticas);
+        tv_Km = findViewById(R.id.tv_KmNadados);
+        tv_mediaMinPorKm = findViewById(R.id.tv_mediaMinPorKm);
+        tv_velocidadMed = findViewById(R.id.tv_velocidadMedia);
 
         entrenamiento = (Entrenamiento) getIntent().getSerializableExtra(CLAVE_ENTRENAMIENTO);
 
-        if(entrenamiento != null){
+        if (entrenamiento != null) {
             estadisticasIndividualesEntreno(entrenamiento);
-        } else{
+        } else {
             estadisticasEntrenos();
+            tituloInfoFecha.setVisibility(View.VISIBLE);
+            tituloInfoFecha.setVisibility(View.GONE);
+
+            infoFecha.setVisibility(View.VISIBLE);
+            infoFecha.setVisibility(View.GONE);
+
+            tituloInfoTiempo.setVisibility(View.VISIBLE);
+            tituloInfoTiempo.setVisibility(View.GONE);
+
+            infoTiempo.setVisibility(View.VISIBLE);
+            infoTiempo.setVisibility(View.GONE);
         }
     }
 
-    public void estadisticasEntrenos(){
+    public void cerrarActivity(View view) {
+        finish();
+    }
+
+    public void estadisticasEntrenos() {
 
         List<Entrenamiento> listaEntrenamientos = RepositorioEntrenamientos.getInstance(this).obtenerEntrenamientos();
 
         Estadisticas estadisticas = new Estadisticas(listaEntrenamientos);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(R.drawable.ic_list);
-        final View dialogLayout = LayoutInflater.from(Activity_Ver_Estadisticas.this).inflate(R.layout.activity__ver__estadisticas, null);
-        builder.setView(dialogLayout);
-        final  AlertDialog dialog = builder.create();
-
-        TextView tv_Km=dialogLayout.findViewById(R.id.tv_KmNadados);
-        TextView tv_mediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
-        TextView tv_velocidadMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
-        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Eliminar);
-
         tv_Km.setText(estadisticas.getDistanciaTotalKms());
         tv_mediaMinPorKm.setText(estadisticas.getMediaPorMinutosKm());
         tv_velocidadMed.setText(estadisticas.getVelocidadMediaKmH());
 
-        btnAceptar.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
-    public void estadisticasIndividualesEntreno(Entrenamiento entrenamiento){
+    public void estadisticasIndividualesEntreno(Entrenamiento entrenamiento) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View dialogLayout = LayoutInflater.from(Activity_Ver_Estadisticas.this).inflate(R.layout.activity__ver__estadisticas, null);
-        builder.setView(dialogLayout);
-        final AlertDialog dialog = builder.create();
+        infoFecha.setText(entrenamiento.getFechaFormateada());
+        infoTiempo.setText(entrenamiento.getTiempoFormateado()+" h.");
+        tv_Km.setText(entrenamiento.getkmNadados());
+        tv_mediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
+        tv_velocidadMed.setText(entrenamiento.toStringVelocidadMedia());
+    }
 
-        TextView tvKmNadados=dialogLayout.findViewById(R.id.tv_KmNadados);
-        TextView tvMediaMinPorKm=dialogLayout.findViewById(R.id.tv_mediaMinPorKm);
-        TextView tvVelMed=dialogLayout.findViewById(R.id.tv_velocidadMedia);
-        Button btnAceptar=dialogLayout.findViewById(R.id.btn_Eliminar);
+    @Override
+    public void onBackPressed(){
 
-        tvKmNadados.setText(entrenamiento.getkmNadados());
-        tvMediaMinPorKm.setText(entrenamiento.getMediaMinPorKm());
-        tvVelMed.setText(entrenamiento.toStringVelocidadMedia());
-
-        btnAceptar.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+        long tiempo = System.currentTimeMillis();
+        if (tiempo - tiempoParaSalir > 3000) {
+            tiempoParaSalir = tiempo;
+            Toast.makeText(this, "Presione de nuevo 'Atrás' si desea salir",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        }
     }
 }

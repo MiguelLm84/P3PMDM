@@ -14,6 +14,7 @@
 
     <style name="ActionBarTitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:fontFamily">@font/baloo</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
 

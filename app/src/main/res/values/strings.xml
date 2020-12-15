@@ -31,14 +31,14 @@
     <string name="fecha_info_entreno">Fecha</string>
     <string name="tiempo_titulo">Tiempo</string>
     <string name="distancia_titulo_info">Distancia</string>
-    <string name="nombreSheredPreferences">Nombre</string>
-    <string name="tvApellido_SheredPreferences">Apellido</string>
-    <string name="tvApellido2_SheredPreferences">Apellido</string>
-    <string name="tvAltura_SheredPreferences">Altura</string>
-    <string name="tvEdad_SheredPreferences">Edad</string>
+    <string name="nombreSheredPreferences"><u>Nombre</u></string>
+    <string name="tvApellido_SheredPreferences"><u>Primer Apellido</u></string>
+    <string name="tvApellido2_SheredPreferences"><u>Segundo Apellido</u></string>
+    <string name="tvAltura_SheredPreferences"><u>Altura</u></string>
+    <string name="tvEdad_SheredPreferences"><u>Edad</u></string>
     <string name="edEdad_SheredPrefferences">Edad</string>
     <string name="edAlturaHint">Altura</string>
-    <string name="edPesoHint">Peso</string>
+    <string name="edPesoHint"><u>Peso</u></string>
     <string name="tvAnhos_SheredPreferences">Años</string>
     <string name="tvMetros_SheredPreferences">m</string>
     <string name="tvKg_SheredPreferences">Kg</string>
@@ -51,4 +51,12 @@
     <string name="tv_minutos_kmTitulo">Minutos /km</string>
     <string name="tv_distancia_total_km">Distancia Total (km)</string>
     <string name="tv_velocidad_media_km_h_titulo">Velocidad Media (km/h)</string>
+    <string name="modificar_datos_personales">Datos Personales</string>
+    <string name="guardar_datos">Guardar</string>
+    <string name="nombreSheredPreferencesActivity">Nombre</string>
+    <string name="tvApellido_SheredPreferencesActivity">Primer Apellido</string>
+    <string name="tvApellido2_SheredPreferencesActivity">Segundo Apellido</string>
+    <string name="tvAltura_SheredPreferencesActivity">Altura</string>
+    <string name="tvEdad_SheredPreferencesActivity">Edad</string>
+    <string name="edPesoHintActivity">Peso</string>
 </resources>
