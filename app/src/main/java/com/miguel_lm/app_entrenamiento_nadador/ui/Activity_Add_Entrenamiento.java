@@ -149,14 +149,15 @@ public class Activity_Add_Entrenamiento extends AppCompatActivity {
 
         setResult(RESULT_OK);
         finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
     }
 
     public void onClickButtonCancelar(View view) {
 
-        // esta línea no es necesaria
         setResult(RESULT_CANCELED);
         finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
 

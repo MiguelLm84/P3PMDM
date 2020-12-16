@@ -34,7 +34,6 @@ public class Activity_Shered_Preferences extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__shered__preferences);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher_piscina);
 
@@ -68,6 +67,7 @@ public class Activity_Shered_Preferences extends AppCompatActivity {
 
         String peso = preferencias.getString(PREF_PESO, "");
         edPeso.setText(peso);
+
     }
 
     public void escribirDatosEnPreferencias(View view) {
@@ -85,6 +85,8 @@ public class Activity_Shered_Preferences extends AppCompatActivity {
 
         setResult(RESULT_OK);
         finish();
+        Toast.makeText(this,"Datos guardados correctamente",Toast.LENGTH_SHORT).show();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
