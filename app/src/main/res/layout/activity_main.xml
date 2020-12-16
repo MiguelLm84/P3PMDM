@@ -117,6 +117,7 @@
                     android:ems="10"
                     android:fontFamily="@font/amaranth"
                     android:gravity="center_vertical"
+                    android:inputType="textPersonName"
                     android:maxLength="20"
                     android:textColor="#2962FF"
                     android:textSize="18sp"
@@ -124,7 +125,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvApellido_SheredPreferences"
                     app:layout_constraintTop_toBottomOf="@+id/edNombre_SheredPreferences"
-                    tools:ignore="LabelFor" />
+                    tools:ignore="LabelFor,TextViewEdits" />
 
                 <TextView
                     android:id="@+id/tvApellido2_SheredPreferences"
@@ -155,6 +156,7 @@
                     android:ems="10"
                     android:fontFamily="@font/amaranth"
                     android:gravity="center_vertical"
+                    android:inputType="textPersonName"
                     android:maxLength="20"
                     android:textColor="#2962FF"
                     android:textSize="18sp"
@@ -162,7 +164,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvApellido2_SheredPreferences"
                     app:layout_constraintTop_toBottomOf="@+id/edApellido1_SheredPreferences"
-                    tools:ignore="LabelFor" />
+                    tools:ignore="LabelFor,TextViewEdits" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
@@ -195,7 +197,7 @@
 
                     <TextView
                         android:id="@+id/edEdad_SheredPreferences"
-                        android:layout_width="20dp"
+                        android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:layout_marginBottom="2dp"
@@ -303,7 +305,7 @@
 
                     <TextView
                         android:id="@+id/edPeso_SheredPreferences"
-                        android:layout_width="30dp"
+                        android:layout_width="36dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:layout_marginEnd="4dp"

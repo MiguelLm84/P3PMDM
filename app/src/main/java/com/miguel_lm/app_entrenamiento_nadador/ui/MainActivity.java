@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         btn_registrar = this.findViewById( R.id.btn_registrar);
 
         leerDatosDesdePreferencias();
-
     }
 
     @Override
@@ -90,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         super.onResume();
 
+        leerDatosDesdePreferencias();
         espacioDisponibleEnMemoriaInterna();
         generarFichero();
     }
