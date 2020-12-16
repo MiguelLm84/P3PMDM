@@ -1,5 +1,6 @@
 package com.miguel_lm.app_entrenamiento_nadador.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,8 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StatFs;
-import android.text.Html;
 import android.text.format.Formatter;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,12 +53,13 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
     private Entrenamiento entrenamientoAmodificar;
     private AdapterEntrenamientos adapterEntrenamientos;
 
-    private TextView edNombre;
-    private TextView edApellido;
-    private TextView edApellido2;
-    private TextView edEdad;
-    private TextView edAltura;
-    private TextView edPeso;
+    private TextView tvNombre;
+    private TextView tvApellido;
+    private TextView tvApellido2;
+    private TextView tvEdad;
+    private TextView tvAltura;
+    private TextView tvPeso;
+    private ImageButton btn_registrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +75,13 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
         adapterEntrenamientos = new AdapterEntrenamientos(this, this);
         recyclerViewEntrenamientos.setAdapter(adapterEntrenamientos);
 
-        edNombre = this.findViewById( R.id.edNombre_SheredPreferences);
-        edApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
-        edApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
-        edEdad = this.findViewById( R.id.edEdad_SheredPreferences);
-        edAltura = this.findViewById( R.id.edAltura_SheredPreferences);
-        edPeso = this.findViewById( R.id.edPeso_SheredPreferences);
+        tvNombre = this.findViewById( R.id.edNombre_SheredPreferences);
+        tvApellido = this.findViewById( R.id.edApellido1_SheredPreferences);
+        tvApellido2 = this.findViewById( R.id.edApellido2_SheredPreferences);
+        tvEdad = this.findViewById( R.id.edEdad_SheredPreferences);
+        tvAltura = this.findViewById( R.id.edAltura_SheredPreferences);
+        tvPeso = this.findViewById( R.id.edPeso_SheredPreferences);
+        btn_registrar = this.findViewById( R.id.btn_registrar);
 
         leerDatosDesdePreferencias();
 
@@ -110,22 +114,33 @@ public class MainActivity extends AppCompatActivity implements SeleccionarEntren
 
         SharedPreferences preferencias = this.getSharedPreferences(PREF_FICHERO, Context.MODE_PRIVATE);
         String nombre = preferencias.getString(PREF_NOMBRE, "");
-        edNombre.setText(nombre);
+        tvNombre.setText(nombre);
 
         String apellido = preferencias.getString(PREF_APELLIDO1,"");
-        edApellido.setText(apellido);
+        tvApellido.setText(apellido);
 
         String apellido2 = preferencias.getString(PREF_APELLIDO2,"");
-        edApellido2.setText(apellido2);
+        tvApellido2.setText(apellido2);
 
         String edad = preferencias.getString(PREF_EDIT,"");
-        edEdad.setText(edad);
+        tvEdad.setText(edad);
 
         String altura = preferencias.getString(PREF_ALTURA, "");
-        edAltura.setText(altura);
+        tvAltura.setText(altura);
 
         String peso = preferencias.getString(PREF_PESO, "");
-        edPeso.setText(peso);
+        tvPeso.setText(peso);
+
+        btn_registrar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, Activity_Shered_Preferences.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
     }
 
     private void generarFichero() {

@@ -13,6 +13,8 @@
     </style>
 
     <style name="ActionBarTitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:layout_gravity">center</item>
+        <!--item name="android:gravity">center</item-->
         <item name="android:fontFamily">@font/baloo</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">#FFFFFF</item>

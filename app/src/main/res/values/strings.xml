@@ -59,4 +59,5 @@
     <string name="tvAltura_SheredPreferencesActivity">Altura</string>
     <string name="tvEdad_SheredPreferencesActivity">Edad</string>
     <string name="edPesoHintActivity">Peso</string>
+    <string name="todo_ImageButton">TODO</string>
 </resources>

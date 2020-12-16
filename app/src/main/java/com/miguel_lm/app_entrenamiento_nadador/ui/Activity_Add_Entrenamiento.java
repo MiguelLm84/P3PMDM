@@ -42,17 +42,14 @@ public class Activity_Add_Entrenamiento extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher_piscina);
 
-        // Recoger controles
         textViewFecha = findViewById(R.id.textViewFecha);
         editTextHoras = findViewById(R.id.edTxtHoras);
         editTextMinutos = findViewById(R.id.edTxtMinutos);
         editTextSegundos = findViewById(R.id.edTxtSegundos);
         editTextDistancia = findViewById(R.id.edTxtDistancia);
-        //textViewFecha.setInputType(InputType.TYPE_NULL);
 
         cal = Calendar.getInstance();
 
-        // Eventos
         textViewFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
